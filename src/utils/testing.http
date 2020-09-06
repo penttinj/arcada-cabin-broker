@@ -1,0 +1,35 @@
+POST https://johanpenttinen.xyz/api/anything HTTP/1.1
+content-type: application/json
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjksIm93bmVyIjoiam9oYW4iLCJpYXQiOjE1OTg5NTM3MzIsImV4cCI6MTYzMDQ4OTczMn0.YZ8Hw9BTG7r2_XjP8iRwcD_Y35A_M3254JRJmErK9wI
+
+
+{
+  "data": [
+    {
+      "name": "Outside_Temperature",
+      "value": "4.1",
+      "place": "Outside",
+      "thinggg": "qwepoi"
+    },
+    {
+      "name": "inside_humidity",
+      "value": "4.8",
+      "place": "inside"
+    },
+    {
+      "name": "inside_temperature",
+      "value": "23.5",
+      "place": "outside"
+    }
+  ]
+}
+
+###
+
+GET https://johan.onl/api/sensors?sensor=inside_temperature&sensor=inside_humidity&count=10 HTTP/1.1
+content-type: application/json
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjksIm93bmVyIjoiam9oYW4iLCJpYXQiOjE1OTg5NTM3MzIsImV4cCI6MTYzMDQ4OTczMn0.YZ8Hw9BTG7r2_XjP8iRwcD_Y35A_M3254JRJmErK9wI
+
+###
+
+HEAD https://johan.onl/api/sensors
