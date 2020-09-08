@@ -2,9 +2,12 @@ import {
   Router, Request, Response, NextFunction,
 } from "express";
 import { check } from "express-validator";
-import * as usersService from "./usersService";
+import * as usersService from "./usersController";
 import { handleValidatorResult } from "../../middleware/handleValidatorResult";
 import { authenticate } from "../../middleware/authorization";
+import { isSameUser } from "../../utils";
+import { User } from "./usersModel";
+import { HTTP400Error, HTTP401Error, HTTP404Error } from "../../utils/httpErrors";
 
 export default (app: Router) => {
   const route = Router();
@@ -61,20 +64,36 @@ export default (app: Router) => {
   route.get("/",
     authenticate,
     async (req: Request, res: Response, next: NextFunction) => {
-      res.send("herro");
-      // Maybe only admin should get a list of all users ^^
+
     });
   route.get("/:id",
     authenticate,
     async (req: Request, res: Response, next: NextFunction) => {
-      res.status(200).send(`GET ${req.params.id}`);
+      try {
+        const result = await usersService.getUser(
+          req.headers.authorization as string,
+          req.params.id,
+        );
+        res.status(200).json(result);
+      } catch (e) {
+        next(e);
+      }
     });
   route.put("/:id",
+    authenticate,
     async (req: Request, res: Response, next: NextFunction) => {
-
+      const sameUser = await isSameUser(
+        req.headers.authorization as string,
+        req.params.id,
+      );
+      usersService.updateUser();
     });
   route.delete("/:id",
+    authenticate,
     async (req: Request, res: Response, next: NextFunction) => {
-
+      const sameUser = await isSameUser(
+        req.headers.authorization as string,
+        req.params.id,
+      );
     });
 };

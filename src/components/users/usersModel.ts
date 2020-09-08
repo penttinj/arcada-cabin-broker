@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-type UserDocument = mongoose.Document & {
+export type UserDocument = mongoose.Document & {
   _id: mongoose.Types.ObjectId,
   firstName: string,
   lastName: string,

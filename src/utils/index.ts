@@ -2,8 +2,10 @@
 import {
   Router, Request, Response, NextFunction,
 } from "express";
+import mongoose from "mongoose";
 import winston from "winston";
 import jwt from "jsonwebtoken";
+import { User } from "../components/users/usersModel";
 import { NODE_ENV, JWT_SECRET } from "../config";
 
 type TWrapper = ((router: Router) => void);
@@ -54,7 +56,13 @@ export const generateToken = (payload: Payload) => {
   throw new Error("JWT_SECRET not set!");
 };
 
-export const isSameUser = (req: Request, res: Response, next: NextFunction) => {
-  console.log("");
+export const getIdFromToken = (token: string) => {
+  if (!JWT_SECRET) throw new Error("JWT_SECRET not set!");
+  const { _id } = (jwt.verify(token, JWT_SECRET) as Payload);
+  return _id;
+};
 
+export const isSameUser = async (authorization: string, requestedId: string) => {
+  const currentUserId = getIdFromToken(authorization);
+  return (currentUserId === requestedId);
 };

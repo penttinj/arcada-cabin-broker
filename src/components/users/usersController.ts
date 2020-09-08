@@ -1,9 +1,9 @@
 /* eslint-disable no-else-return */
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
-import { HTTP400Error } from "../../utils/httpErrors";
-import { User } from "./usersModel";
-import { generateToken } from "../../utils";
+import { HTTP400Error, HTTP401Error, HTTP404Error } from "../../utils/httpErrors";
+import { User, UserDocument } from "./usersModel";
+import { generateToken, isSameUser } from "../../utils";
 
 interface UserDetails {
   email: string;
@@ -26,6 +26,13 @@ const isUniqueEmail = async (email: string) => {
   }
 };
 
+export const extractUserInfo = (user: UserDocument) => ({
+  _id: user._id,
+  email: user.email,
+  firstName: user.firstName,
+  lastName: user.lastName,
+});
+
 export const createUser = async (userDetails: UserDetails) => {
   validatePasswordLength(userDetails.password, 8);
   await isUniqueEmail(userDetails.email);
@@ -36,11 +43,7 @@ export const createUser = async (userDetails: UserDetails) => {
     password: hashedPassword,
   });
   if (user) {
-    return {
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-    };
+    return extractUserInfo(user);
   } else {
     return false;
   }
@@ -57,15 +60,35 @@ export const login = async (email: string, password: string) => {
     };
     const token = generateToken(payload);
     return {
-      user: {
-        _id: user.id,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-      },
+      user: extractUserInfo(user),
       token,
     };
   } else {
     throw new HTTP400Error("Incorrect user or email");
   }
+};
+
+export const getUser = async (authorization: string, idParam: string) => {
+  const sameUser = await isSameUser(
+    authorization,
+    idParam,
+  );
+  if (sameUser) {
+    const result = await User.findById(idParam);
+    if (result) {
+      return {
+        success: true,
+        message: "Found the user",
+        user: extractUserInfo(result),
+      };
+    } else {
+      throw new HTTP404Error();
+    }
+  } else {
+    throw new HTTP401Error();
+  }
+};
+
+export const updateUser = () => {
+  console.log("");
 };

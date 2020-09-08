@@ -1,29 +1,34 @@
+### REGISTER
 POST http://localhost:3000/users/register HTTP/1.1
 content-type: application/json
 
 
 {
-  "email": "user1@user.com",
-  "firstName": "user",
-  "lastName": "1",
+  "email": "user3@user.com",
+  "firstName": "user3",
+  "lastName": "123",
   "password": "12345678"
 }
 
-###
-
+### LOGIN
 POST http://localhost:3000/users/login HTTP/1.1
 content-type: application/json
 
 
 {
-  "email": "user1@user.com",
-  "firstName": "user",
-  "lastName": "1",
+  "email": "user3@user.com",
   "password": "12345678"
 }
 
-### Testing JWT token mechanics:
+### GET A USER
+GET http://localhost:3000/users/5f57afeeadab0217b99290ff HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjU3YWZlZWFkYWIwMjE3Yjk5MjkwZmYiLCJlbWFpbCI6InVzZXIzQHVzZXIuY29tIiwiaWF0IjoxNTk5NTgyODk5LCJleHAiOjE1OTk1ODMxOTl9.FFkOtrPYv0fw0l0O60KYb1UQ6Xkxi-Hx-8vz2kKJjTo
 
+### GET A USER
+PUT http://localhost:3000/users/5f57afeeadab0217b99290ff HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjU3YWZlZWFkYWIwMjE3Yjk5MjkwZmYiLCJlbWFpbCI6InVzZXIzQHVzZXIuY29tIiwiaWF0IjoxNTk5NTgyODk5LCJleHAiOjE1OTk1ODMxOTl9.FFkOtrPYv0fw0l0O60KYb1UQ6Xkxi-Hx-8vz2kKJjTo
+
+### Testing JWT token mechanics:
 GET http://localhost:3000/users HTTP/1.1
 content-type: application/json
 Authorization: eyJhbdGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjU3NzFhMTlhMTJiZjVmZmE2ZThlYmMiLCJlbWFpbCI6InVzZXIxQHVzZXIuY29tIiwiaWF0IjoxNTk5NTY3MzI0LCJleHAiOjE1OTk1Njc2MjR9.d5KL0zlDutNRo95Rh5O9Ajz1pOF7AdsPVqgNgZRHrPU
