@@ -3,7 +3,7 @@ import http from "http";
 import express from "express";
 import { PORT } from "./config";
 import {
-  applyMiddleware, applyRoutes, logger,
+  applyRoutes, logger,
 } from "./utils";
 import middleware from "./middleware";
 import apiRoutes from "./components";
@@ -18,20 +18,20 @@ process.on("uncaughtException", (err: Error) => {
 });
 
 process.on("unhandledRejection", (err: Error) => {
-  console.log(err);
   console.log("Uncaught Rejection");
+  console.log(err);
   logger.error(err.stack);
   process.exit(1);
 });
 
-async function go() {
-  const router = express();
-  applyMiddleware(middleware, router);
-  applyRoutes(apiRoutes, router);
-  applyMiddleware(errorHandlers, router);
+async function main() {
+  const app = express();
+  applyRoutes(middleware, app);
+  applyRoutes(apiRoutes, app);
+  applyRoutes(errorHandlers, app);
 
-  const httpServer = http.createServer(router);
+  const httpServer = http.createServer(app);
   await initMongoDB();
   httpServer.listen(PORT, () => console.log(`Server is listening on http://localhost:${PORT}...`));
 }
-go();
+main();

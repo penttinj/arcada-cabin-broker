@@ -21,12 +21,12 @@ const jsonError = (message: string, error: number, stack?: string | undefined): 
 });
 
 export const notFoundError = () => {
-  throw new HTTP404Error("404 Resource not found :s");
+  throw new HTTP404Error("404 Resource not found!");
 };
 
 export const clientError = (err: Error, res: Response, next: NextFunction) => {
   if (err instanceof HTTPClientError) {
-    console.log(err.stack);
+    console.log("Client Error:", err.message);
     res
       .status(err.statusCode)
       .json(jsonError(err.message, err.statusCode));

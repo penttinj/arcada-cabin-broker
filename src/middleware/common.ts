@@ -15,8 +15,9 @@ export const handleBodyRequestParsing = (router: Router) => {
   router.use(parser.json());
 };
 
-export const trafficLog = (router: Router) => {
+export const logTraffic = (router: Router) => {
   router.use((req: Request, res: Response, next: NextFunction) => {
+    console.log(`${new Date().toLocaleString()}: ${req.method} ${req.url}`);
     const { url } = req;
     const time = new Date();
     logger.log({

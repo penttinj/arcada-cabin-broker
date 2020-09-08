@@ -1,5 +1,5 @@
-import sensorsRoutes from "./sensors/routes";
+import usersRoutes from "./users/usersRoutes";
 
 export default [
-  ...sensorsRoutes,
+  usersRoutes,
 ];

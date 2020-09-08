@@ -1,35 +1,29 @@
-POST https://johanpenttinen.xyz/api/anything HTTP/1.1
+POST http://localhost:3000/users/register HTTP/1.1
 content-type: application/json
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjksIm93bmVyIjoiam9oYW4iLCJpYXQiOjE1OTg5NTM3MzIsImV4cCI6MTYzMDQ4OTczMn0.YZ8Hw9BTG7r2_XjP8iRwcD_Y35A_M3254JRJmErK9wI
 
 
 {
-  "data": [
-    {
-      "name": "Outside_Temperature",
-      "value": "4.1",
-      "place": "Outside",
-      "thinggg": "qwepoi"
-    },
-    {
-      "name": "inside_humidity",
-      "value": "4.8",
-      "place": "inside"
-    },
-    {
-      "name": "inside_temperature",
-      "value": "23.5",
-      "place": "outside"
-    }
-  ]
+  "email": "user1@user.com",
+  "firstName": "user",
+  "lastName": "1",
+  "password": "12345678"
 }
 
 ###
 
-GET https://johan.onl/api/sensors?sensor=inside_temperature&sensor=inside_humidity&count=10 HTTP/1.1
+POST http://localhost:3000/users/login HTTP/1.1
 content-type: application/json
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjksIm93bmVyIjoiam9oYW4iLCJpYXQiOjE1OTg5NTM3MzIsImV4cCI6MTYzMDQ4OTczMn0.YZ8Hw9BTG7r2_XjP8iRwcD_Y35A_M3254JRJmErK9wI
 
-###
 
-HEAD https://johan.onl/api/sensors
+{
+  "email": "user1@user.com",
+  "firstName": "user",
+  "lastName": "1",
+  "password": "12345678"
+}
+
+### Testing JWT token mechanics:
+
+GET http://localhost:3000/users HTTP/1.1
+content-type: application/json
+Authorization: eyJhbdGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjU3NzFhMTlhMTJiZjVmZmE2ZThlYmMiLCJlbWFpbCI6InVzZXIxQHVzZXIuY29tIiwiaWF0IjoxNTk5NTY3MzI0LCJleHAiOjE1OTk1Njc2MjR9.d5KL0zlDutNRo95Rh5O9Ajz1pOF7AdsPVqgNgZRHrPU

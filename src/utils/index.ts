@@ -6,42 +6,14 @@ import winston from "winston";
 import jwt from "jsonwebtoken";
 import { NODE_ENV, JWT_SECRET } from "../config";
 
-export const emptyQuery = (query: Object): boolean => {
-  if (Object.keys(query).length === 0) return true;
-  return false;
-};
-
 type TWrapper = ((router: Router) => void);
 
-export const applyMiddleware = (
-  middlewares: TWrapper[],
-  router: Router,
-) => {
-  for (const middleware of middlewares) {
-    middleware(router);
-  }
-};
-
-type THandler = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => Promise<void> | void;
-
-type TRoute = {
-  path: string;
-  method: string;
-  handler: THandler | THandler[];
-}
-
 export const applyRoutes = (
-  routes: TRoute[],
-  router: Router,
+  routes: TWrapper[],
+  app: Router,
 ) => {
   for (const route of routes) {
-    const { method, path, handler } = route;
-    /* router.use(route.path, route.handler); <= My shitty solution */
-    (router as any)[method](path, handler); // The chad way
+    route(app);
   }
 };
 
@@ -63,3 +35,26 @@ if (NODE_ENV === 'development') {
     level: "silly",
   }));
 }
+
+export type Payload = {
+  _id: string
+  email: string,
+}
+
+export const generateToken = (payload: Payload) => {
+  if (JWT_SECRET) {
+    const token = jwt.sign(payload, JWT_SECRET,
+      {
+        algorithm: "HS256",
+        expiresIn: "5m",
+      });
+
+    return token;
+  }
+  throw new Error("JWT_SECRET not set!");
+};
+
+export const isSameUser = (req: Request, res: Response, next: NextFunction) => {
+  console.log("");
+
+};

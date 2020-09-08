@@ -5,6 +5,8 @@ import * as ErrorHandler from "../utils/errorHandler";
 
 const handle404Error = (router: Router) => {
   router.use((req: Request, res: Response) => {
+    // If this middleware is entered then it means no routes were matched,
+    // and reached here without an error attached to the handler.
     ErrorHandler.notFoundError();
   });
 };
