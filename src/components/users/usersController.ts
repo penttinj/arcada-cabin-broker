@@ -52,7 +52,7 @@ export const createUser = async (userDetails: UserDetails) => {
 export const login = async (email: string, password: string) => {
   console.log("");
   const user = await User.findOne({ email });
-  if (user && bcrypt.compare(password, user.password)) {
+  if (user && await bcrypt.compare(password, user.password)) {
     console.log("correct password & user");
     const payload = {
       _id: user.id,
@@ -68,27 +68,42 @@ export const login = async (email: string, password: string) => {
   }
 };
 
-export const getUser = async (authorization: string, idParam: string) => {
-  const sameUser = await isSameUser(
-    authorization,
-    idParam,
-  );
-  if (sameUser) {
-    const result = await User.findById(idParam);
-    if (result) {
-      return {
-        success: true,
-        message: "Found the user",
-        user: extractUserInfo(result),
-      };
-    } else {
-      throw new HTTP404Error();
-    }
+export const getUser = async (idParam: string) => {
+  const result = await User.findById(idParam);
+  if (result) {
+    return {
+      success: true,
+      message: "Found the user",
+      user: extractUserInfo(result),
+    };
   } else {
-    throw new HTTP401Error();
+    throw new HTTP404Error();
   }
 };
 
-export const updateUser = () => {
-  console.log("");
+export const updateUser = async (idParam: string, body: any) => {
+  if (body.email) await isUniqueEmail(body.email);
+  const result = await User.updateOne({ _id: idParam }, { $set: body });
+  if (result) {
+    const updatedUser = await User.findById(idParam);
+    return {
+      success: true,
+      message: "Updated user",
+      user: extractUserInfo(updatedUser as UserDocument),
+    };
+  } else {
+    throw new HTTP400Error();
+  }
+};
+
+export const deleteUser = async (idParam: string) => {
+  const result = await User.findByIdAndDelete({ _id: idParam });
+  if (result) {
+    return {
+      success: true,
+      message: "Deleted user",
+    };
+  } else {
+    throw new HTTP400Error();
+  }
 };

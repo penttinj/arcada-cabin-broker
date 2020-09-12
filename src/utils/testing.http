@@ -4,10 +4,10 @@ content-type: application/json
 
 
 {
-  "email": "user3@user.com",
-  "firstName": "user3",
+  "email": "user4@user.com",
+  "firstName": "user4",
   "lastName": "123",
-  "password": "12345678"
+  "password": "123456789"
 }
 
 ### LOGIN
@@ -16,19 +16,27 @@ content-type: application/json
 
 
 {
-  "email": "user3@user.com",
-  "password": "12345678"
+  "email": "foo@gmail.com",
+  "password": "123456789"
 }
 
 ### GET A USER
-GET http://localhost:3000/users/5f57afeeadab0217b99290ff HTTP/1.1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjU3YWZlZWFkYWIwMjE3Yjk5MjkwZmYiLCJlbWFpbCI6InVzZXIzQHVzZXIuY29tIiwiaWF0IjoxNTk5NTgyODk5LCJleHAiOjE1OTk1ODMxOTl9.FFkOtrPYv0fw0l0O60KYb1UQ6Xkxi-Hx-8vz2kKJjTo
+GET http://localhost:3000/users/5f5cdbe51c49d8340a8725dc HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVjZGJlNTFjNDlkODM0MGE4NzI1ZGIiLCJlbWFpbCI6InVzZXI0QHVzZXIuY29tIiwiaWF0IjoxNTk5OTI2MTA2LCJleHAiOjE1OTk5MjY0MDZ9.lP2LOTPrrT5ngh3kUSXVSJpUAaUKQ7Tl_VYKI0CYUYQ
 
-### PUT A USER
-PUT http://localhost:3000/users/5f57afeeadab0217b99290ff HTTP/1.1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjU3YWZlZWFkYWIwMjE3Yjk5MjkwZmYiLCJlbWFpbCI6InVzZXIzQHVzZXIuY29tIiwiaWF0IjoxNTk5NTgyODk5LCJleHAiOjE1OTk1ODMxOTl9.FFkOtrPYv0fw0l0O60KYb1UQ6Xkxi-Hx-8vz2kKJjTo
-
-### Testing JWT token mechanics:
-GET http://localhost:3000/users HTTP/1.1
+### UPDATE A USER
+PUT http://localhost:3000/users/5f5cf6f3f3199a5046647607 HTTP/1.1
 content-type: application/json
-Authorization: eyJhbdGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjU3NzFhMTlhMTJiZjVmZmE2ZThlYmMiLCJlbWFpbCI6InVzZXIxQHVzZXIuY29tIiwiaWF0IjoxNTk5NTY3MzI0LCJleHAiOjE1OTk1Njc2MjR9.d5KL0zlDutNRo95Rh5O9Ajz1pOF7AdsPVqgNgZRHrPU
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVjZjZmM2YzMTk5YTUwNDY2NDc2MDciLCJlbWFpbCI6InVzZXI0QHVzZXIuY29tIiwiaWF0IjoxNTk5OTI4MDU2LCJleHAiOjE1OTk5MjgzNTZ9.c2xKenIw6oioIqbvCBtoaIVi46mJaPZJ52ME_Sei7WQ
+
+
+{
+  "lastName": "sista namn",
+  "email": "foo@gmail.com"
+}
+
+### DELETE A USER
+
+DELETE http://localhost:3000/users/5f5cf6f3f3199a5046647607 HTTP/1.1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVjZjZmM2YzMTk5YTUwNDY2NDc2MDciLCJlbWFpbCI6ImZvb0BnbWFpbC5jb20iLCJpYXQiOjE1OTk5MzE1MjQsImV4cCI6MTU5OTkzMTgyNH0.jLxyPTfrpA2qrktwU95wUFGzV34qv6HqJxPCy1qvE3U

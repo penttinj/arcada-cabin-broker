@@ -1,13 +1,14 @@
 import {
   Router, Request, Response, NextFunction,
 } from "express";
-import { check } from "express-validator";
-import * as usersService from "./usersController";
+import { check, param, body } from "express-validator";
+import * as usersController from "./usersController";
 import { handleValidatorResult } from "../../middleware/handleValidatorResult";
 import { authenticate } from "../../middleware/authorization";
 import { isSameUser } from "../../utils";
-import { User } from "./usersModel";
-import { HTTP400Error, HTTP401Error, HTTP404Error } from "../../utils/httpErrors";
+import {
+  HTTP400Error, HTTP401Error, HTTP404Error, HTTP403Error,
+} from "../../utils/httpErrors";
 
 export default (app: Router) => {
   const route = Router();
@@ -19,7 +20,7 @@ export default (app: Router) => {
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await usersService.createUser({
+        const result = await usersController.createUser({
           email: req.body.email,
           firstName: req.body.firstName,
           lastName: req.body.lastName,
@@ -43,14 +44,14 @@ export default (app: Router) => {
       }
     });
   route.post("/login",
-    check(["email", "password"]).exists(),
+    check(["email", "password"]).exists().escape(),
     check("email").isEmail(),
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       console.log(req.body);
 
       try {
-        const result = await usersService.login(req.body.email, req.body.password);
+        const result = await usersController.login(req.body.email, req.body.password);
         res.set("Authorization", result.token);
         res.status(200).json({
           success: true,
@@ -63,32 +64,64 @@ export default (app: Router) => {
     });
   route.get("/:id",
     authenticate,
+    check("id").exists().escape(),
+    handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await usersService.getUser(
+        const sameUser = await isSameUser(
           req.headers.authorization as string,
           req.params.id,
         );
-        res.status(200).json(result);
+        if (sameUser) {
+          const result = await usersController.getUser(req.params.id);
+          res.status(200).json(result);
+        } else {
+          throw new HTTP403Error();
+        }
       } catch (e) {
         next(e);
       }
     });
   route.put("/:id",
     authenticate,
+    param("id").exists().escape(),
+    body("email").optional().isEmail(),
+    handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
-      const sameUser = await isSameUser(
+      // _id is immutable so no need to prevent _id from body! :D
+      try {
+        const sameUser = await isSameUser(
         req.headers.authorization as string,
         req.params.id,
-      );
-      usersService.updateUser();
+        );
+        if (sameUser) {
+          const result = await usersController.updateUser(req.params.id, req.body);
+          res.status(200).json(result);
+        } else {
+          throw new HTTP403Error();
+        }
+      } catch (e) {
+        next(e);
+      }
     });
   route.delete("/:id",
     authenticate,
+    param("id").exists().escape(),
+    handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
-      const sameUser = await isSameUser(
+      try {
+        const sameUser = await isSameUser(
         req.headers.authorization as string,
         req.params.id,
-      );
+        );
+        if (sameUser) {
+          const result = await usersController.deleteUser(req.params.id);
+          res.status(200).json(result);
+        } else {
+          throw new HTTP403Error();
+        }
+      } catch (e) {
+        next(e);
+      }
     });
 };
