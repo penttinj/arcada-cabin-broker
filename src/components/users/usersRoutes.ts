@@ -61,11 +61,6 @@ export default (app: Router) => {
         next(e);
       }
     });
-  route.get("/",
-    authenticate,
-    async (req: Request, res: Response, next: NextFunction) => {
-
-    });
   route.get("/:id",
     authenticate,
     async (req: Request, res: Response, next: NextFunction) => {

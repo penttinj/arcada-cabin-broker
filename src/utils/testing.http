@@ -24,7 +24,7 @@ content-type: application/json
 GET http://localhost:3000/users/5f57afeeadab0217b99290ff HTTP/1.1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjU3YWZlZWFkYWIwMjE3Yjk5MjkwZmYiLCJlbWFpbCI6InVzZXIzQHVzZXIuY29tIiwiaWF0IjoxNTk5NTgyODk5LCJleHAiOjE1OTk1ODMxOTl9.FFkOtrPYv0fw0l0O60KYb1UQ6Xkxi-Hx-8vz2kKJjTo
 
-### GET A USER
+### PUT A USER
 PUT http://localhost:3000/users/5f57afeeadab0217b99290ff HTTP/1.1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjU3YWZlZWFkYWIwMjE3Yjk5MjkwZmYiLCJlbWFpbCI6InVzZXIzQHVzZXIuY29tIiwiaWF0IjoxNTk5NTgyODk5LCJleHAiOjE1OTk1ODMxOTl9.FFkOtrPYv0fw0l0O60KYb1UQ6Xkxi-Hx-8vz2kKJjTo
 
