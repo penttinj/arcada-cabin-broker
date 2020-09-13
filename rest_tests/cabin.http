@@ -1,0 +1,20 @@
+### REGISTER
+POST http://localhost:3000/cabins/register HTTP/1.1
+content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVkZmM4YjRlMWVmOTM5NGU1M2VmMWIiLCJlbWFpbCI6ImpvaGFuQGdtYWlsLmNvbSIsImlhdCI6MTU5OTk5NTAzOCwiZXhwIjoxNTk5OTk1MzM4fQ.wFaLAr0ijQfPFP0hdUD14XxCRCzKfBYCY4UpFwZggc4
+
+
+{
+  "address": "saxbyvägen 340",
+  "squarageProperty": 7000,
+  "squarageCabin": 200,
+  "sauna": true,
+  "beachfront": true
+}
+
+### Get all cabins
+GET http://localhost:3000/cabins/ HTTP/1.1
+
+### Get specific cabin with its Id
+GET http://localhost:3000/cabins/5f5df92dc171f5360f7384d1 HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVkZjNiMGZkOWQ4ZTMxYmRjOGUzMmQiLCJlbWFpbCI6InVzZXI1QGdtYWlsLmNvbSIsImlhdCI6MTU5OTk5NDU5MiwiZXhwIjoxNTk5OTk0ODkyfQ.zWwNlUgn6ktE4YkjKJuXRaj797oH8_4rMEFi4dQ9SyQ

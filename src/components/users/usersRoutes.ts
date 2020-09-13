@@ -43,6 +43,7 @@ export default (app: Router) => {
         next(e);
       }
     });
+
   route.post("/login",
     check(["email", "password"]).exists().escape(),
     check("email").isEmail(),
@@ -62,9 +63,10 @@ export default (app: Router) => {
         next(e);
       }
     });
+
   route.get("/:id",
     authenticate,
-    check("id").exists().escape(),
+    param("id").escape(),
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
@@ -74,7 +76,11 @@ export default (app: Router) => {
         );
         if (sameUser) {
           const result = await usersController.getUser(req.params.id);
-          res.status(200).json(result);
+          res.status(200).json({
+            success: true,
+            message: "Found the user",
+            user: result,
+          });
         } else {
           throw new HTTP403Error();
         }
@@ -82,21 +88,26 @@ export default (app: Router) => {
         next(e);
       }
     });
+
   route.put("/:id",
     authenticate,
-    param("id").exists().escape(),
+    param("id").escape(),
     body("email").optional().isEmail(),
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       // _id is immutable so no need to prevent _id from body! :D
       try {
         const sameUser = await isSameUser(
-        req.headers.authorization as string,
-        req.params.id,
+          req.headers.authorization as string,
+          req.params.id,
         );
         if (sameUser) {
           const result = await usersController.updateUser(req.params.id, req.body);
-          res.status(200).json(result);
+          res.status(200).json({
+            success: true,
+            message: "Updated user",
+            user: result,
+          });
         } else {
           throw new HTTP403Error();
         }
@@ -104,6 +115,7 @@ export default (app: Router) => {
         next(e);
       }
     });
+
   route.delete("/:id",
     authenticate,
     param("id").exists().escape(),
@@ -111,8 +123,8 @@ export default (app: Router) => {
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const sameUser = await isSameUser(
-        req.headers.authorization as string,
-        req.params.id,
+          req.headers.authorization as string,
+          req.params.id,
         );
         if (sameUser) {
           const result = await usersController.deleteUser(req.params.id);

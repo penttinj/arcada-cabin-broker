@@ -1,9 +1,13 @@
 /* eslint-disable no-else-return */
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
-import { HTTP400Error, HTTP401Error, HTTP404Error } from "../../utils/httpErrors";
+import {
+  HTTP400Error,
+  HTTP401Error,
+  HTTP404Error,
+} from "../../utils/httpErrors";
 import { User, UserDocument } from "./usersModel";
-import { generateToken, isSameUser } from "../../utils";
+import { generateToken } from "../../utils";
 
 interface UserDetails {
   email: string;
@@ -71,11 +75,7 @@ export const login = async (email: string, password: string) => {
 export const getUser = async (idParam: string) => {
   const result = await User.findById(idParam);
   if (result) {
-    return {
-      success: true,
-      message: "Found the user",
-      user: extractUserInfo(result),
-    };
+    return extractUserInfo(result);
   } else {
     throw new HTTP404Error();
   }
@@ -86,11 +86,7 @@ export const updateUser = async (idParam: string, body: any) => {
   const result = await User.updateOne({ _id: idParam }, { $set: body });
   if (result) {
     const updatedUser = await User.findById(idParam);
-    return {
-      success: true,
-      message: "Updated user",
-      user: extractUserInfo(updatedUser as UserDocument),
-    };
+    return extractUserInfo(updatedUser as UserDocument);
   } else {
     throw new HTTP400Error();
   }

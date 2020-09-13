@@ -4,10 +4,10 @@ content-type: application/json
 
 
 {
-  "email": "user4@user.com",
-  "firstName": "user4",
-  "lastName": "123",
-  "password": "123456789"
+  "email": "johan@gmail.com",
+  "firstName": "Johan",
+  "lastName": "Penttinen",
+  "password": "asdasdasd"
 }
 
 ### LOGIN
@@ -16,13 +16,13 @@ content-type: application/json
 
 
 {
-  "email": "foo@gmail.com",
-  "password": "123456789"
+  "email": "johan@gmail.com",
+  "password": "asdasdasd"
 }
 
 ### GET A USER
 GET http://localhost:3000/users/5f5cdbe51c49d8340a8725dc HTTP/1.1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVjZGJlNTFjNDlkODM0MGE4NzI1ZGIiLCJlbWFpbCI6InVzZXI0QHVzZXIuY29tIiwiaWF0IjoxNTk5OTI2MTA2LCJleHAiOjE1OTk5MjY0MDZ9.lP2LOTPrrT5ngh3kUSXVSJpUAaUKQ7Tl_VYKI0CYUYQ
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVkZWI3MTQ3YjI0ZTI5OWZmYzBhZDciLCJlbWFpbCI6InVzZXI0QGdtYWlsLmNvbSIsImlhdCI6MTU5OTk5MDcwOCwiZXhwIjoxNTk5OTkxMDA4fQ.uu0R1K4ZpmKSTGg1CM0BKOnShwAfEWFga2hVapGlx3c
 
 ### UPDATE A USER
 PUT http://localhost:3000/users/5f5cf6f3f3199a5046647607 HTTP/1.1

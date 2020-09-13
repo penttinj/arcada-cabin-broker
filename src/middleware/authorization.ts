@@ -4,10 +4,6 @@ import { generateToken, Payload } from "../utils";
 import { HTTP401Error } from "../utils/httpErrors";
 import { JWT_SECRET } from "../config";
 
-export const refreshToken = ({ _id, email }: Payload) => {
-  return generateToken({ _id, email });
-};
-
 export const authenticate = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization as string;
 
@@ -18,9 +14,12 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
 
   try {
     const decodedToken = jwt.verify(token, JWT_SECRET as jwt.Secret);
-    const refreshed = refreshToken((decodedToken as Payload));
-    // Automatically refresh the user's token each time they pass a route.
-    res.set("Authorization", refreshed);
+    const refreshedToken = generateToken({
+      _id: (decodedToken as Payload)._id,
+      email: (decodedToken as Payload).email,
+    });
+    // Automatically refresh the user's token each time they get authenticated.
+    res.set("Authorization", refreshedToken);
     next();
   } catch (e) {
     throw new HTTP401Error();
