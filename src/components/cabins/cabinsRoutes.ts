@@ -4,8 +4,8 @@ import {
 import { check, param, body } from "express-validator";
 import * as cabinsController from "./cabinsController";
 import { handleValidatorResult } from "../../middleware/handleValidatorResult";
-import { authenticate } from "../../middleware/authorization";
-import { isSameUser, getIdFromToken } from "../../utils";
+import { authenticate, isSameUser } from "../../middleware/authentication";
+import { getIdFromToken } from "../../utils";
 import { HTTP403Error } from "../../utils/httpErrors";
 
 export default (app: Router) => {
@@ -86,21 +86,17 @@ export default (app: Router) => {
 
   route.put("/:cabinId",
     authenticate,
+    isSameUser,
     param("id").escape(),
-    body("email").optional().isEmail(),
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const sameUser = await isSameUser(
-        req.headers.authorization as string,
-        req.params.id,
-        );
-        if (sameUser) {
-          const result = { foo: "bar" };
-          res.status(200).json(result);
-        } else {
-          throw new HTTP403Error();
-        }
+        const result = await cabinsController.updateCabin(req.params.bind, req.body);
+        res.status(200).json({
+          success: true,
+          message: "Updated cabin",
+          cabin: result,
+        });
       } catch (e) {
         next(e);
       }
@@ -108,20 +104,17 @@ export default (app: Router) => {
 
   route.delete("/:cabinId",
     authenticate,
+    isSameUser,
     param("id").escape(),
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const sameUser = await isSameUser(
-        req.headers.authorization as string,
-        req.params.id,
-        );
-        if (sameUser) {
-          const result = { foo: "bar" };
-          res.status(200).json(result);
-        } else {
-          throw new HTTP403Error();
-        }
+        const result = await cabinsController.deleteCabin(req.params.id);
+        res.status(200).json({
+          success: true,
+          message: "Deleted cabin",
+          cabin: result,
+        });
       } catch (e) {
         next(e);
       }

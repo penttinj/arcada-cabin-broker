@@ -22,21 +22,20 @@ content-type: application/json
 
 ### GET A USER
 GET http://localhost:3000/users/5f5cdbe51c49d8340a8725dc HTTP/1.1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVkZWI3MTQ3YjI0ZTI5OWZmYzBhZDciLCJlbWFpbCI6InVzZXI0QGdtYWlsLmNvbSIsImlhdCI6MTU5OTk5MDcwOCwiZXhwIjoxNTk5OTkxMDA4fQ.uu0R1K4ZpmKSTGg1CM0BKOnShwAfEWFga2hVapGlx3c
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVkZmM4YjRlMWVmOTM5NGU1M2VmMWIiLCJlbWFpbCI6ImpvaGFuQGdtYWlsLmNvbSIsImlhdCI6MTYwMDAwMzM4NywiZXhwIjoxNjAwMDAzNjg3fQ._lDshIoa6fkL3agv94MOt-M9qWc4_nGeU0MVxpLqf-Q
 
 ### UPDATE A USER
 PUT http://localhost:3000/users/5f5cf6f3f3199a5046647607 HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVjZjZmM2YzMTk5YTUwNDY2NDc2MDciLCJlbWFpbCI6InVzZXI0QHVzZXIuY29tIiwiaWF0IjoxNTk5OTI4MDU2LCJleHAiOjE1OTk5MjgzNTZ9.c2xKenIw6oioIqbvCBtoaIVi46mJaPZJ52ME_Sei7WQ
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVkZmM4YjRlMWVmOTM5NGU1M2VmMWIiLCJlbWFpbCI6ImpvaGFuQGdtYWlsLmNvbSIsImlhdCI6MTYwMDAwMzM4NywiZXhwIjoxNjAwMDAzNjg3fQ._lDshIoa6fkL3agv94MOt-M9qWc4_nGeU0MVxpLqf-Q
 
 
 {
-  "lastName": "sista namn",
-  "email": "foo@gmail.com"
+  "lastName": "sista namn"
 }
 
 ### DELETE A USER
 
-DELETE http://localhost:3000/users/5f5cf6f3f3199a5046647607 HTTP/1.1
+DELETE http://localhost:3000/users/5f5dfc8b4e1ef9394e53ef1b HTTP/1.1
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVjZjZmM2YzMTk5YTUwNDY2NDc2MDciLCJlbWFpbCI6ImZvb0BnbWFpbC5jb20iLCJpYXQiOjE1OTk5MzE1MjQsImV4cCI6MTU5OTkzMTgyNH0.jLxyPTfrpA2qrktwU95wUFGzV34qv6HqJxPCy1qvE3U
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVkZmM4YjRlMWVmOTM5NGU1M2VmMWIiLCJlbWFpbCI6ImpvaGFuQGdtYWlsLmNvbSIsImlhdCI6MTYwMDAwNjM3OSwiZXhwIjoxNjAwMDA2Njc5fQ.TJGYFnqSGRBEB3ZBJTD3V19lL6i8GFRqInNfjMSsh5o

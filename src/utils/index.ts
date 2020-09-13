@@ -61,8 +61,3 @@ export const getIdFromToken = (token: string) => {
   const { _id } = (jwt.verify(token, JWT_SECRET) as Payload);
   return _id;
 };
-
-export const isSameUser = async (authorization: string, requestedId: string) => {
-  const currentUserId = getIdFromToken(authorization);
-  return (currentUserId === requestedId);
-};

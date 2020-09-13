@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { generateToken, Payload } from "../utils";
-import { HTTP401Error } from "../utils/httpErrors";
+import { generateToken, getIdFromToken, Payload } from "../utils";
+import { HTTP401Error, HTTP403Error } from "../utils/httpErrors";
 import { JWT_SECRET } from "../config";
 
 export const authenticate = (req: Request, res: Response, next: NextFunction) => {
@@ -23,5 +23,14 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
     next();
   } catch (e) {
     throw new HTTP401Error();
+  }
+};
+
+export const isSameUser = (req: Request, res: Response, next: NextFunction) => {
+  const currentUserId = getIdFromToken(req.headers.authorization as string);
+  if (currentUserId === req.params.id) {
+    next();
+  } else {
+    throw new HTTP403Error();
   }
 };

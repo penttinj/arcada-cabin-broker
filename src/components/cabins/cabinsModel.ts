@@ -16,6 +16,7 @@ const cabinSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "User",
     required: true,
+    immutable: true,
   },
   address: {
     type: String,

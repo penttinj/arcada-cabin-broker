@@ -96,8 +96,7 @@ export const deleteUser = async (idParam: string) => {
   const result = await User.findByIdAndDelete({ _id: idParam });
   if (result) {
     return {
-      success: true,
-      message: "Deleted user",
+      _id: idParam,
     };
   } else {
     throw new HTTP400Error();

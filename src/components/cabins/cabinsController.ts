@@ -64,29 +64,21 @@ export const getCabin = async (cabinId: string) => {
   throw new HTTP404Error("Cabin not found");
 };
 
-/*
-export const updateUser = async (idParam: string, body: any) => {
-  if (body.email) await isUniqueEmail(body.email);
-  const result = await User.updateOne({ _id: idParam }, { $set: body });
+export const updateCabin = async (idParam: string, body: any) => {
+  const result = await Cabin.updateOne({ _id: idParam }, { $set: body });
   if (result) {
-    const updatedUser = await User.findById(idParam);
-    return {
-      success: true,
-      message: "Updated user",
-      user: extractUserInfo(updatedUser as UserDocument),
-    };
+    const updatedCabin = await Cabin.findById(idParam);
+    return extractCabinInfo(updatedCabin as CabinDocument);
   }
   throw new HTTP400Error();
 };
 
-export const deleteUser = async (idParam: string) => {
-  const result = await User.findByIdAndDelete({ _id: idParam });
+export const deleteCabin = async (idParam: string) => {
+  const result = await Cabin.findByIdAndDelete({ _id: idParam });
   if (result) {
     return {
-      success: true,
-      message: "Deleted user",
+      _id: idParam,
     };
   }
   throw new HTTP400Error();
 };
-*/

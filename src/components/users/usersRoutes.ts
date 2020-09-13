@@ -4,8 +4,7 @@ import {
 import { check, param, body } from "express-validator";
 import * as usersController from "./usersController";
 import { handleValidatorResult } from "../../middleware/handleValidatorResult";
-import { authenticate } from "../../middleware/authorization";
-import { isSameUser } from "../../utils";
+import { authenticate, isSameUser } from "../../middleware/authentication";
 import {
   HTTP400Error, HTTP401Error, HTTP404Error, HTTP403Error,
 } from "../../utils/httpErrors";
@@ -66,24 +65,17 @@ export default (app: Router) => {
 
   route.get("/:id",
     authenticate,
+    isSameUser,
     param("id").escape(),
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const sameUser = await isSameUser(
-          req.headers.authorization as string,
-          req.params.id,
-        );
-        if (sameUser) {
-          const result = await usersController.getUser(req.params.id);
-          res.status(200).json({
-            success: true,
-            message: "Found the user",
-            user: result,
-          });
-        } else {
-          throw new HTTP403Error();
-        }
+        const result = await usersController.getUser(req.params.id);
+        res.status(200).json({
+          success: true,
+          message: "Found the user",
+          user: result,
+        });
       } catch (e) {
         next(e);
       }
@@ -91,26 +83,19 @@ export default (app: Router) => {
 
   route.put("/:id",
     authenticate,
+    isSameUser,
     param("id").escape(),
     body("email").optional().isEmail(),
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       // _id is immutable so no need to prevent _id from body! :D
       try {
-        const sameUser = await isSameUser(
-          req.headers.authorization as string,
-          req.params.id,
-        );
-        if (sameUser) {
-          const result = await usersController.updateUser(req.params.id, req.body);
-          res.status(200).json({
-            success: true,
-            message: "Updated user",
-            user: result,
-          });
-        } else {
-          throw new HTTP403Error();
-        }
+        const result = await usersController.updateUser(req.params.id, req.body);
+        res.status(200).json({
+          success: true,
+          message: "Updated user",
+          user: result,
+        });
       } catch (e) {
         next(e);
       }
@@ -118,20 +103,17 @@ export default (app: Router) => {
 
   route.delete("/:id",
     authenticate,
+    isSameUser,
     param("id").exists().escape(),
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const sameUser = await isSameUser(
-          req.headers.authorization as string,
-          req.params.id,
-        );
-        if (sameUser) {
-          const result = await usersController.deleteUser(req.params.id);
-          res.status(200).json(result);
-        } else {
-          throw new HTTP403Error();
-        }
+        const result = await usersController.deleteUser(req.params.id);
+        res.status(200).json({
+          success: true,
+          message: "Deleted user",
+          user: result,
+        });
       } catch (e) {
         next(e);
       }
