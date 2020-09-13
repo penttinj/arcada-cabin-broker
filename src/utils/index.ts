@@ -48,7 +48,7 @@ export const generateToken = (payload: Payload) => {
     const token = jwt.sign(payload, JWT_SECRET,
       {
         algorithm: "HS256",
-        expiresIn: "5m",
+        expiresIn: "1h", // CHANGE THIS!!!!!!!!!!!! to 5m
       });
 
     return token;

@@ -4,7 +4,7 @@ content-type: application/json
 
 
 {
-  "email": "johan@gmail.com",
+  "email": "johan2@gmail.com",
   "firstName": "Johan",
   "lastName": "Penttinen",
   "password": "asdasdasd"
@@ -16,7 +16,7 @@ content-type: application/json
 
 
 {
-  "email": "johan@gmail.com",
+  "email": "johan2@gmail.com",
   "password": "asdasdasd"
 }
 

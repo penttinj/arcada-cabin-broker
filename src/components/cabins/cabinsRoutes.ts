@@ -4,7 +4,8 @@ import {
 import { check, param, body } from "express-validator";
 import * as cabinsController from "./cabinsController";
 import { handleValidatorResult } from "../../middleware/handleValidatorResult";
-import { authenticate, isSameUser } from "../../middleware/authentication";
+import { authenticate } from "../../middleware/authentication";
+import { isSameUser } from "./checks";
 import { getIdFromToken } from "../../utils";
 import { HTTP403Error } from "../../utils/httpErrors";
 
@@ -59,8 +60,9 @@ export default (app: Router) => {
             cabins: result,
           });
         } else {
-          res.status(500).json({
-            message: "Whoopsie!",
+          res.status(404).json({
+            success: false,
+            message: "No cabins were found",
           });
         }
       } catch (e) {
@@ -69,7 +71,7 @@ export default (app: Router) => {
     });
 
   route.get("/:cabinId",
-    param("id").escape(),
+    param("cabinId").escape(),
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
@@ -87,11 +89,11 @@ export default (app: Router) => {
   route.put("/:cabinId",
     authenticate,
     isSameUser,
-    param("id").escape(),
+    param("cabinId").escape(),
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await cabinsController.updateCabin(req.params.bind, req.body);
+        const result = await cabinsController.updateCabin(req.params.cabinId, req.body);
         res.status(200).json({
           success: true,
           message: "Updated cabin",
@@ -105,11 +107,11 @@ export default (app: Router) => {
   route.delete("/:cabinId",
     authenticate,
     isSameUser,
-    param("id").escape(),
+    param("cabinId").escape(),
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await cabinsController.deleteCabin(req.params.id);
+        const result = await cabinsController.deleteCabin(req.params.cabinId);
         res.status(200).json({
           success: true,
           message: "Deleted cabin",

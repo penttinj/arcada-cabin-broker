@@ -4,7 +4,8 @@ import {
 import { check, param, body } from "express-validator";
 import * as usersController from "./usersController";
 import { handleValidatorResult } from "../../middleware/handleValidatorResult";
-import { authenticate, isSameUser } from "../../middleware/authentication";
+import { authenticate } from "../../middleware/authentication";
+import { isSameUser } from "./checks";
 import {
   HTTP400Error, HTTP401Error, HTTP404Error, HTTP403Error,
 } from "../../utils/httpErrors";
@@ -48,8 +49,6 @@ export default (app: Router) => {
     check("email").isEmail(),
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
-      console.log(req.body);
-
       try {
         const result = await usersController.login(req.body.email, req.body.password);
         res.set("Authorization", result.token);

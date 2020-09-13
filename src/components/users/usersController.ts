@@ -54,7 +54,6 @@ export const createUser = async (userDetails: UserDetails) => {
 };
 
 export const login = async (email: string, password: string) => {
-  console.log("");
   const user = await User.findOne({ email });
   if (user && await bcrypt.compare(password, user.password)) {
     console.log("correct password & user");
@@ -68,7 +67,7 @@ export const login = async (email: string, password: string) => {
       token,
     };
   } else {
-    throw new HTTP400Error("Incorrect user or email");
+    throw new HTTP400Error("Incorrect email or password");
   }
 };
 

@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable array-callback-return */
 import mongoose from "mongoose";
 import {
   HTTP400Error,
@@ -15,6 +17,15 @@ interface CabinDetails {
   sauna: boolean,
   beachfront: boolean,
 }
+interface CabinInfo {
+    _id: any;
+    owner: string;
+    address: string;
+    squarageProperty: number;
+    squarageCabin: number;
+    sauna: boolean;
+    beachfront: boolean;
+}
 
 export const extractCabinInfo = (cabin: CabinDocument) => {
   if ("firstName" in cabin.owner) {
@@ -28,7 +39,7 @@ export const extractCabinInfo = (cabin: CabinDocument) => {
       beachfront: cabin.beachfront,
     };
   }
-  throw new Error("Something happened extracting cabin info");
+  throw new Error("Unexpected error in extractcabininfo");
 };
 
 export const registerCabin = async (cabinDetails: CabinDetails) => {
@@ -45,10 +56,13 @@ export const registerCabin = async (cabinDetails: CabinDetails) => {
 };
 
 export const getAllCabins = async () => {
-  const cabins = await Cabin.find().populate("owner");
-  if (cabins && "firstName" in cabins[0].owner) {
-    const formattedCabins = cabins.map((cabin) => {
-      return extractCabinInfo(cabin);
+  const cabins = await Cabin.find().populate("owner").exec();
+  if (cabins) {
+    const formattedCabins: CabinInfo[] = [];
+    cabins.forEach((cabin) => {
+      if (cabin.owner != null) {
+        formattedCabins.push(extractCabinInfo(cabin));
+      }
     });
     return formattedCabins;
   }
@@ -67,14 +81,14 @@ export const getCabin = async (cabinId: string) => {
 export const updateCabin = async (idParam: string, body: any) => {
   const result = await Cabin.updateOne({ _id: idParam }, { $set: body });
   if (result) {
-    const updatedCabin = await Cabin.findById(idParam);
+    const updatedCabin = await Cabin.findById(idParam).populate("owner");
     return extractCabinInfo(updatedCabin as CabinDocument);
   }
   throw new HTTP400Error();
 };
 
 export const deleteCabin = async (idParam: string) => {
-  const result = await Cabin.findByIdAndDelete({ _id: idParam });
+  const result = await Cabin.findByIdAndDelete(idParam);
   if (result) {
     return {
       _id: idParam,

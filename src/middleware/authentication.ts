@@ -25,12 +25,3 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
     throw new HTTP401Error();
   }
 };
-
-export const isSameUser = (req: Request, res: Response, next: NextFunction) => {
-  const currentUserId = getIdFromToken(req.headers.authorization as string);
-  if (currentUserId === req.params.id) {
-    next();
-  } else {
-    throw new HTTP403Error();
-  }
-};
