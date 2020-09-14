@@ -38,6 +38,6 @@ const cabinSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
-}, { timestamps: true });
+});
 
 export const Cabin = mongoose.model<CabinDocument>("Cabin", cabinSchema);

@@ -6,7 +6,7 @@ import {
   applyRoutes, logger,
 } from "./utils";
 import middleware from "./middleware";
-import apiRoutes from "./components";
+import apiRoutes from "./services";
 import errorHandlers from "./middleware/errorHandlers";
 import { initMongoDB } from "./config/mongodb";
 

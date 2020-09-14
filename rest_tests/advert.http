@@ -1,0 +1,35 @@
+### Register an advert
+POST http://localhost:3000/adverts/register HTTP/1.1
+content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAxMDQxNTQsImV4cCI6MTYwMDEwNzc1NH0.TZQozmn4pFHVxN9odJ-tr1eIF7uPvmm84ENxO9cq5EI
+
+
+{
+  "cabinId": "5f5f42efcb4ee56aae44df0f",
+  "pricePerDay": 200,
+  "startDate": "2020-09-30",
+  "endDate": "2020-10-16"
+}
+
+### Get all adverts
+GET http://localhost:3000/adverts/ HTTP/1.1
+
+### Get specific advert with its Id
+GET http://localhost:3000/adverts/5f5f78ae043e1bb5630f0f01 HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAwNzg0OTIsImV4cCI6MTYwMDA4MjA5Mn0._bStEr3xNu_JAcoiVPObeBbnwICPw07YuzHl3UJU8SM
+
+### Update a specific advert
+PUT http://localhost:3000/adverts/5f5fa60b48240cf26285b707 HTTP/1.1
+content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAxMDQxNTQsImV4cCI6MTYwMDEwNzc1NH0.TZQozmn4pFHVxN9odJ-tr1eIF7uPvmm84ENxO9cq5EI
+
+
+{
+  "pricePerDay": 69,
+  "endDate": "2020-10-28",
+  "startDate": "2020-10-22"
+}
+
+### Delete specific advert 
+DELETE http://localhost:3000/adverts/5f5f78ae043e1bb5630f0f01 HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAwOTIyMTksImV4cCI6MTYwMDA5NTgxOX0.Xn7JAgLxbeNDvCSoWvnS4SAfJRAYRPa_600KVF7KO_c

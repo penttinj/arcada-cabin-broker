@@ -5,7 +5,7 @@ import {
 import mongoose from "mongoose";
 import winston from "winston";
 import jwt from "jsonwebtoken";
-import { User } from "../components/users/usersModel";
+import { User } from "../services/users/usersModel";
 import { NODE_ENV, JWT_SECRET } from "../config";
 
 type TWrapper = ((router: Router) => void);

@@ -79,6 +79,7 @@ export const getCabin = async (cabinId: string) => {
 };
 
 export const updateCabin = async (idParam: string, body: any) => {
+  console.log("bodyyyy", body);
   const result = await Cabin.updateOne({ _id: idParam }, { $set: body });
   if (result) {
     const updatedCabin = await Cabin.findById(idParam).populate("owner");

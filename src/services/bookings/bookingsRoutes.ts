@@ -2,67 +2,65 @@ import {
   Router, Request, Response, NextFunction,
 } from "express";
 import { check, param, body } from "express-validator";
-import * as cabinsController from "./cabinsController";
+import * as advertsController from "./bookingsController";
 import { handleValidatorResult } from "../../middleware/handleValidatorResult";
 import { authenticate } from "../../middleware/authentication";
-import { isSameUser } from "./checks";
+import { isSameCabinOwner, checkDates, checkUpdatedDates } from "./checks";
 import { getIdFromToken } from "../../utils";
 import { HTTP403Error } from "../../utils/httpErrors";
 
 export default (app: Router) => {
   const route = Router();
-  app.use("/cabins", route);
+  app.use("/adverts", route);
 
   route.post("/register",
     authenticate,
-    body(["address", "squarageProperty", "squarageCabin", "sauna", "beachfront"])
+    body(["cabinId", "pricePerDay", "startDate", "endDate"])
       .exists().trim().escape(),
-    body(["squarageProperty", "squarageCabin"]).isNumeric(),
-    body(["sauna", "beachfront"]).isBoolean(),
+    body("pricePerDay").isNumeric(),
+    body(["startDate", "endDate"]).isISO8601(),
     handleValidatorResult,
+    isSameCabinOwner, // placed in the end since the cabin id is required for this
+    checkDates,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const userId = getIdFromToken(req.headers.authorization as string);
-        const result = await cabinsController.registerCabin({
-          userId,
-          address: req.body.address,
-          squarageProperty: req.body.squarageProperty,
-          squarageCabin: req.body.squarageCabin,
-          sauna: req.body.sauna,
-          beachfront: req.body.beachfront,
+        const result = await advertsController.registerAdvert({
+          cabin: req.body.cabinId,
+          pricePerDay: req.body.pricePerDay,
+          startDate: req.body.startDate,
+          endDate: req.body.endDate,
         });
 
         if (result) {
           res.status(201).json({
             success: true,
-            message: "Cabin created",
-            cabin: result,
+            message: "Advert created",
+            advert: result,
           });
         } else {
           res.status(500).json({
             success: false,
-            message: "User couldn't be created",
+            message: "Advert couldn't be created",
           });
         }
       } catch (e) {
         next(e);
       }
     });
-
   route.get("/",
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await cabinsController.getAllCabins();
+        const result = await advertsController.getAllAdverts();
         if (result) {
           res.status(200).json({
             success: true,
-            message: `${result.length} Cabins found`,
-            cabins: result,
+            message: `${result.length} Adverts found`,
+            adverts: result,
           });
         } else {
           res.status(404).json({
             success: false,
-            message: "No cabins were found",
+            message: "No adverts were found",
           });
         }
       } catch (e) {
@@ -70,52 +68,55 @@ export default (app: Router) => {
       }
     });
 
-  route.get("/:cabinId",
-    param("cabinId").escape(),
+  route.get("/:advertId",
+    param("advertId").escape(),
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await cabinsController.getCabin(req.params.cabinId);
+        const result = await advertsController.getAdvert(req.params.advertId);
         res.status(200).json({
           success: true,
           message: "Cabin found",
-          cabin: result,
+          advert: result,
         });
       } catch (e) {
         next(e);
       }
     });
 
-  route.put("/:cabinId",
+  route.put("/:advertId",
     authenticate,
-    isSameUser,
-    param("cabinId").escape(),
+    body(["startDate", "endDate"]).optional().isISO8601(),
+    param("advertId").escape(),
     handleValidatorResult,
+    isSameCabinOwner,
+    checkDates,
+    checkUpdatedDates,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await cabinsController.updateCabin(req.params.cabinId, req.body);
+        const result = await advertsController.updateAdvert(req.params.advertId, req.body);
         res.status(200).json({
           success: true,
           message: "Updated cabin",
-          cabin: result,
+          advert: result,
         });
       } catch (e) {
         next(e);
       }
     });
 
-  route.delete("/:cabinId",
+  route.delete("/:advertId",
     authenticate,
-    isSameUser,
-    param("cabinId").escape(),
+    param("advertId").escape(),
+    isSameCabinOwner,
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await cabinsController.deleteCabin(req.params.cabinId);
+        const result = await advertsController.deleteAdvert(req.params.advertId);
         res.status(200).json({
           success: true,
           message: "Deleted cabin",
-          cabin: result,
+          advert: result,
         });
       } catch (e) {
         next(e);

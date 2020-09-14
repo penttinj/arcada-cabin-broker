@@ -1,14 +1,14 @@
 ### REGISTER
 POST http://localhost:3000/cabins/register HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVlM2RhZDM2MDNiZjZiMDk1OTQzOTYiLCJlbWFpbCI6ImpvaGFuMkBnbWFpbC5jb20iLCJpYXQiOjE2MDAwMTM4ODMsImV4cCI6MTYwMDAxNzQ4M30.YpdqUtf05s1u5rSB4w1Pl0Dx5cwmn93s_Svo6-av5L4
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAwOTIyMTksImV4cCI6MTYwMDA5NTgxOX0.Xn7JAgLxbeNDvCSoWvnS4SAfJRAYRPa_600KVF7KO_c
 
 
 {
-  "address": "saxbyvägen 1",
-  "squarageProperty": 5,
-  "squarageCabin": 2010,
-  "sauna": false,
+  "address": "HellooRoad 3",
+  "squarageProperty": 2,
+  "squarageCabin": 3,
+  "sauna": true,
   "beachfront": true
 }
 
@@ -16,13 +16,14 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVlM2RhZDM2MDNi
 GET http://localhost:3000/cabins/ HTTP/1.1
 
 ### Get specific cabin with its Id
-GET http://localhost:3000/cabins/5f5e5192a4c3267fd58e2a2b HTTP/1.1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVlM2RhZDM2MDNiZjZiMDk1OTQzOTYiLCJlbWFpbCI6ImpvaGFuMkBnbWFpbC5jb20iLCJpYXQiOjE2MDAwMTM4ODMsImV4cCI6MTYwMDAxNzQ4M30.YpdqUtf05s1u5rSB4w1Pl0Dx5cwmn93s_Svo6-av5L4
+GET http://localhost:3000/cabins/5f5f42efcb4ee56aae44df0f HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVlM2RhZDM2MDNiZjZiMDk1OTQzOTYiLCJlbWFpbCI6ImpvaGFuMkBnbWFpbC5jb20iLCJpYXQiOjE2MDAwNzQzNjksImV4cCI6MTYwMDA3Nzk2OX0.R1D3LiCHSFAAdroJelYSsqK-TQ9I_ceNCJREmwi9Jyg
 
 ### Update a specific cabin
-PUT http://localhost:3000/cabins/5f5e5192a4c3267fd58e2a2b HTTP/1.1
+PUT http://localhost:3000/cabins/5f5f7902043e1bb5630f0f03 HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVlM2RhZDM2MDNiZjZiMDk1OTQzOTYiLCJlbWFpbCI6ImpvaGFuMkBnbWFpbC5jb20iLCJpYXQiOjE2MDAwMTM4ODMsImV4cCI6MTYwMDAxNzQ4M30.YpdqUtf05s1u5rSB4w1Pl0Dx5cwmn93s_Svo6-av5L4
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAwOTIyMTksImV4cCI6MTYwMDA5NTgxOX0.Xn7JAgLxbeNDvCSoWvnS4SAfJRAYRPa_600KVF7KO_c
+
 
 {
   "address": "saxbyvägen 999",
@@ -33,4 +34,4 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVlM2RhZDM2MDNi
 
 ### Delete specific cabin 
 DELETE http://localhost:3000/cabins/5f5dec40be89542b312cdd0f HTTP/1.1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVlM2RhZDM2MDNiZjZiMDk1OTQzOTYiLCJlbWFpbCI6ImpvaGFuMkBnbWFpbC5jb20iLCJpYXQiOjE2MDAwMTM4ODMsImV4cCI6MTYwMDAxNzQ4M30.YpdqUtf05s1u5rSB4w1Pl0Dx5cwmn93s_Svo6-av5L4
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVlM2RhZDM2MDNiZjZiMDk1OTQzOTYiLCJlbWFpbCI6ImpvaGFuMkBnbWFpbC5jb20iLCJpYXQiOjE2MDAwNzQzNjksImV4cCI6MTYwMDA3Nzk2OX0.R1D3LiCHSFAAdroJelYSsqK-TQ9I_ceNCJREmwi9Jyg
