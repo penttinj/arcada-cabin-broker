@@ -2,7 +2,7 @@ import {
   Router, Request, Response, NextFunction,
 } from "express";
 import { check, param, body } from "express-validator";
-import * as cabinsController from "./cabinsController";
+import * as cabinsService from "./cabinsService";
 import { handleValidatorResult } from "../../middleware/handleValidatorResult";
 import { authenticate } from "../../middleware/authentication";
 import { isSameUser } from "./checks";
@@ -13,7 +13,8 @@ export default (app: Router) => {
   const route = Router();
   app.use("/cabins", route);
 
-  route.post("/register",
+  // Register cabin
+  route.post("/",
     authenticate,
     body(["address", "squarageProperty", "squarageCabin", "sauna", "beachfront"])
       .exists().trim().escape(),
@@ -23,7 +24,7 @@ export default (app: Router) => {
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const userId = getIdFromToken(req.headers.authorization as string);
-        const result = await cabinsController.registerCabin({
+        const result = await cabinsService.registerCabin({
           userId,
           address: req.body.address,
           squarageProperty: req.body.squarageProperty,
@@ -50,9 +51,10 @@ export default (app: Router) => {
     });
 
   route.get("/",
+    authenticate,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await cabinsController.getAllCabins();
+        const result = await cabinsService.getAllCabins();
         if (result) {
           res.status(200).json({
             success: true,
@@ -71,11 +73,12 @@ export default (app: Router) => {
     });
 
   route.get("/:cabinId",
+    authenticate,
     param("cabinId").escape(),
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await cabinsController.getCabin(req.params.cabinId);
+        const result = await cabinsService.getCabin(req.params.cabinId);
         res.status(200).json({
           success: true,
           message: "Cabin found",
@@ -93,7 +96,7 @@ export default (app: Router) => {
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await cabinsController.updateCabin(req.params.cabinId, req.body);
+        const result = await cabinsService.updateCabin(req.params.cabinId, req.body);
         res.status(200).json({
           success: true,
           message: "Updated cabin",
@@ -111,7 +114,7 @@ export default (app: Router) => {
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await cabinsController.deleteCabin(req.params.cabinId);
+        const result = await cabinsService.deleteCabin(req.params.cabinId);
         res.status(200).json({
           success: true,
           message: "Deleted cabin",

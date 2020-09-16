@@ -12,7 +12,7 @@ import { Cabin, CabinDocument } from '../cabins/cabinsModel';
 
 export const isSameCabinOwner = async (req: Request, res: Response, next: NextFunction) => {
   const loggedInUserId = getIdFromToken(req.headers.authorization as string);
-  let result = (req.method === "POST" && req.url === "/register")
+  let result = (req.method === "POST" && req.url === "/")
     ? await Cabin.findById(req.body.cabinId)
     : await Advert.findById(req.params.advertId).populate("cabin");
   if (result) {

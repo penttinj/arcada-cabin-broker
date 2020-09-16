@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 import winston from "winston";
 import jwt from "jsonwebtoken";
 import { User } from "../services/users/usersModel";
-import { NODE_ENV, JWT_SECRET } from "../config";
+import config from "../config";
 
 type TWrapper = ((router: Router) => void);
 
@@ -31,7 +31,7 @@ export const logger: winston.Logger = winston.createLogger({
   ],
 });
 
-if (NODE_ENV === 'development') {
+if (config.NODE_ENV === 'development') {
   logger.add(new winston.transports.Console({
     format: winston.format.simple(),
     level: "silly",
@@ -44,8 +44,8 @@ export type Payload = {
 }
 
 export const generateToken = (payload: Payload) => {
-  if (JWT_SECRET) {
-    const token = jwt.sign(payload, JWT_SECRET,
+  if (config.JWT_SECRET) {
+    const token = jwt.sign(payload, config.JWT_SECRET,
       {
         algorithm: "HS256",
         expiresIn: "1h", // CHANGE THIS!!!!!!!!!!!! to 5m
@@ -57,7 +57,7 @@ export const generateToken = (payload: Payload) => {
 };
 
 export const getIdFromToken = (token: string) => {
-  if (!JWT_SECRET) throw new Error("JWT_SECRET not set!");
-  const { _id } = (jwt.verify(token, JWT_SECRET) as Payload);
+  if (!config.JWT_SECRET) throw new Error("JWT_SECRET not set!");
+  const { _id } = (jwt.verify(token, config.JWT_SECRET) as Payload);
   return _id;
 };

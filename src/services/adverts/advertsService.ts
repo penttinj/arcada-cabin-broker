@@ -7,7 +7,7 @@ import {
   HTTP404Error,
 } from "../../utils/httpErrors";
 import { UserDocument } from "../users/usersModel";
-import { Advert, AdvertDocument } from "./bookingsModel";
+import { Advert, AdvertDocument } from "./advertsModel";
 
 interface AdvertDetails {
   cabin: string,
@@ -24,10 +24,12 @@ interface AdvertInfo {
 }
 
 export const extractAdvertInfo = (advert: AdvertDocument) => {
-  if ("owner" in advert.cabin) {
+  if ("owner" in advert.cabin && "firstName" in advert.cabin.owner) {
+    const { firstName, lastName } = advert.cabin.owner;
     return {
       _id: advert._id,
       pricePerDay: advert.pricePerDay,
+      advertiser: `${firstName} ${lastName}`,
       address: advert.cabin.address,
       startDate: advert.startDate,
       endDate: advert.endDate,
@@ -57,7 +59,7 @@ export const getAllAdverts = async () => {
       path: "cabin",
       populate: {
         path: "owner",
-        select: "-password",
+        select: "email firstName lastName -_id",
       },
     });
   if (adverts) {
@@ -78,7 +80,7 @@ export const getAdvert = async (advertId: string) => {
       path: "cabin",
       populate: {
         path: "owner",
-        select: "-password",
+        select: "email firstName lastName -_id",
       },
     });
   if (advert) {

@@ -2,31 +2,34 @@ import {
   Router, Request, Response, NextFunction,
 } from "express";
 import { check, param, body } from "express-validator";
-import * as advertsController from "./bookingsController";
+import * as bookingsService from "./bookingsService";
 import { handleValidatorResult } from "../../middleware/handleValidatorResult";
 import { authenticate } from "../../middleware/authentication";
-import { isSameCabinOwner, checkDates, checkUpdatedDates } from "./checks";
-import { getIdFromToken } from "../../utils";
+import {
+  advertExists, isSameUser, checkBookingDates, checkUpdatedBookingDates,
+} from "./checks";
 import { HTTP403Error } from "../../utils/httpErrors";
+import { getIdFromToken } from "../../utils";
 
 export default (app: Router) => {
   const route = Router();
-  app.use("/adverts", route);
+  app.use("/bookings", route);
 
-  route.post("/register",
+  // Register booking
+  route.post("/",
     authenticate,
-    body(["cabinId", "pricePerDay", "startDate", "endDate"])
+    body(["advertId", "startDate", "endDate"])
       .exists().trim().escape(),
-    body("pricePerDay").isNumeric(),
     body(["startDate", "endDate"]).isISO8601(),
     handleValidatorResult,
-    isSameCabinOwner, // placed in the end since the cabin id is required for this
-    checkDates,
+    advertExists,
+    checkBookingDates,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await advertsController.registerAdvert({
-          cabin: req.body.cabinId,
-          pricePerDay: req.body.pricePerDay,
+        // TODO: Check legal dates
+        const result = await bookingsService.registerBooking({
+          advert: req.body.advertId,
+          bookingUser: getIdFromToken(req.headers.authorization as string),
           startDate: req.body.startDate,
           endDate: req.body.endDate,
         });
@@ -34,13 +37,13 @@ export default (app: Router) => {
         if (result) {
           res.status(201).json({
             success: true,
-            message: "Advert created",
+            message: "Booking created",
             advert: result,
           });
         } else {
           res.status(500).json({
             success: false,
-            message: "Advert couldn't be created",
+            message: "Booking couldn't be created for internal reasons",
           });
         }
       } catch (e) {
@@ -48,19 +51,20 @@ export default (app: Router) => {
       }
     });
   route.get("/",
+    authenticate,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await advertsController.getAllAdverts();
+        const result = await bookingsService.getAllBookings();
         if (result) {
           res.status(200).json({
             success: true,
-            message: `${result.length} Adverts found`,
-            adverts: result,
+            message: `${result.length} bookings found`,
+            bookings: result,
           });
         } else {
           res.status(404).json({
             success: false,
-            message: "No adverts were found",
+            message: "No bookings were found",
           });
         }
       } catch (e) {
@@ -68,51 +72,52 @@ export default (app: Router) => {
       }
     });
 
-  route.get("/:advertId",
-    param("advertId").escape(),
+  route.get("/:bookingId",
+    authenticate,
+    param("bookingId").escape(),
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await advertsController.getAdvert(req.params.advertId);
+        const result = await bookingsService.getBooking(req.params.bookingId);
         res.status(200).json({
           success: true,
-          message: "Cabin found",
-          advert: result,
+          message: "Booking found",
+          booking: result,
         });
       } catch (e) {
         next(e);
       }
     });
 
-  route.put("/:advertId",
+  route.put("/:bookingId",
     authenticate,
     body(["startDate", "endDate"]).optional().isISO8601(),
-    param("advertId").escape(),
+    param("bookingId").escape(),
     handleValidatorResult,
-    isSameCabinOwner,
-    checkDates,
-    checkUpdatedDates,
+    isSameUser,
+    checkBookingDates,
+    checkUpdatedBookingDates,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await advertsController.updateAdvert(req.params.advertId, req.body);
+        const result = await bookingsService.updateBooking(req.params.bookingId, req.body);
         res.status(200).json({
           success: true,
-          message: "Updated cabin",
-          advert: result,
+          message: "Updated booking",
+          booking: result,
         });
       } catch (e) {
         next(e);
       }
     });
 
-  route.delete("/:advertId",
+  route.delete("/:bookingId",
     authenticate,
-    param("advertId").escape(),
-    isSameCabinOwner,
+    param("bookingId").escape(),
     handleValidatorResult,
+    isSameUser,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await advertsController.deleteAdvert(req.params.advertId);
+        const result = await bookingsService.deleteBooking(req.params.bookingId);
         res.status(200).json({
           success: true,
           message: "Deleted cabin",

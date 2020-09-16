@@ -1,6 +1,6 @@
 import { Response, NextFunction } from "express";
 import { HTTPClientError, HTTP404Error } from "./httpErrors";
-import { NODE_ENV } from "../config";
+import config from "../config";
 import { logger } from ".";
 
 interface StatusError extends Error {
@@ -36,7 +36,7 @@ export const clientError = (err: Error, res: Response, next: NextFunction) => {
 };
 
 export const serverError = (err: Error | StatusError, res: Response, next: NextFunction) => {
-  if (NODE_ENV === "production") {
+  if (config.NODE_ENV === "production") {
     logger.error(err.stack);
     res
       .status(500)

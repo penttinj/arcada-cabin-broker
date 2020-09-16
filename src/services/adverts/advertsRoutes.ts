@@ -2,7 +2,7 @@ import {
   Router, Request, Response, NextFunction,
 } from "express";
 import { check, param, body } from "express-validator";
-import * as advertsController from "./advertsController";
+import * as advertsService from "./advertsService";
 import { handleValidatorResult } from "../../middleware/handleValidatorResult";
 import { authenticate } from "../../middleware/authentication";
 import { isSameCabinOwner, checkDates, checkUpdatedDates } from "./checks";
@@ -13,18 +13,22 @@ export default (app: Router) => {
   const route = Router();
   app.use("/adverts", route);
 
-  route.post("/register",
+  // Register advert
+  route.post("/",
     authenticate,
     body(["cabinId", "pricePerDay", "startDate", "endDate"])
       .exists().trim().escape(),
     body("pricePerDay").isNumeric(),
     body(["startDate", "endDate"]).isISO8601(),
     handleValidatorResult,
-    isSameCabinOwner, // placed in the end since the cabin id is required for this
+    isSameCabinOwner,
     checkDates,
+    // Could still also check an advert doesn't collide with other ads for same cabin
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await advertsController.registerAdvert({
+        // I guess we could pass the start and end dates to the service
+        // and from there it checks for collisions. Since we're hving to access the Model
+        const result = await advertsService.registerAdvert({
           cabin: req.body.cabinId,
           pricePerDay: req.body.pricePerDay,
           startDate: req.body.startDate,
@@ -48,9 +52,10 @@ export default (app: Router) => {
       }
     });
   route.get("/",
+    authenticate,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await advertsController.getAllAdverts();
+        const result = await advertsService.getAllAdverts();
         if (result) {
           res.status(200).json({
             success: true,
@@ -69,14 +74,15 @@ export default (app: Router) => {
     });
 
   route.get("/:advertId",
+    authenticate,
     param("advertId").escape(),
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await advertsController.getAdvert(req.params.advertId);
+        const result = await advertsService.getAdvert(req.params.advertId);
         res.status(200).json({
           success: true,
-          message: "Cabin found",
+          message: "Advert found",
           advert: result,
         });
       } catch (e) {
@@ -94,10 +100,10 @@ export default (app: Router) => {
     checkUpdatedDates,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await advertsController.updateAdvert(req.params.advertId, req.body);
+        const result = await advertsService.updateAdvert(req.params.advertId, req.body);
         res.status(200).json({
           success: true,
-          message: "Updated cabin",
+          message: "Updated advert",
           advert: result,
         });
       } catch (e) {
@@ -112,10 +118,10 @@ export default (app: Router) => {
     handleValidatorResult,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const result = await advertsController.deleteAdvert(req.params.advertId);
+        const result = await advertsService.deleteAdvert(req.params.advertId);
         res.status(200).json({
           success: true,
-          message: "Deleted cabin",
+          message: "Deleted advert",
           advert: result,
         });
       } catch (e) {

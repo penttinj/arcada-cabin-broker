@@ -17,13 +17,12 @@ export const handleBodyRequestParsing = (router: Router) => {
 
 export const logTraffic = (router: Router) => {
   router.use((req: Request, res: Response, next: NextFunction) => {
-    console.log(`${new Date().toLocaleString()}: ${req.method} ${req.url}`);
-    const { url } = req;
+    const { url, method } = req;
+    console.log(`${new Date().toLocaleString()}: ${method} ${url}`);
     const time = new Date();
     logger.log({
       level: "info",
-      message: `Received request for ${url}`,
-      service: "traffic",
+      message: `Received request ${method} for ${url}`,
     });
     next();
   });

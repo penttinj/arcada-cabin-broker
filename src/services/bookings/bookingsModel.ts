@@ -1,26 +1,29 @@
 /* eslint-disable prefer-arrow-callback */
 /* eslint-disable func-names */
 import mongoose from "mongoose";
-import { CabinDocument } from "../cabins/cabinsModel";
+import { AdvertDocument } from "../adverts/advertsModel";
+import { UserDocument } from "../users/usersModel";
 
-export type AdvertDocument = mongoose.Document & {
+export type BookingDocument = mongoose.Document & {
   _id: mongoose.Types.ObjectId,
-  cabin: mongoose.Types.ObjectId | CabinDocument,
-  pricePerDay: number,
+  advert: mongoose.Types.ObjectId | AdvertDocument,
+  bookingUser: mongoose.Types.ObjectId | UserDocument,
   startDate: Date,
   endDate: Date,
 }
 
-const advertSchema = new mongoose.Schema({
-  cabin: {
+const bookingSchema = new mongoose.Schema({
+  advert: {
     type: mongoose.Types.ObjectId,
-    ref: "Cabin",
+    ref: "Advert",
     required: true,
     immutable: true,
   },
-  pricePerDay: {
-    type: Number,
+  bookingUser: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
     required: true,
+    immutable: true,
   },
   startDate: {
     type: Date,
@@ -32,12 +35,4 @@ const advertSchema = new mongoose.Schema({
   },
 });
 
-// This is a cool way to validate paths when a document gets updated()
-// Though you can't access existing values :/ So one can't check that an updated startDate is
-// before the existing endDate
-advertSchema.path("startDate").validate(function (v: Date) {
-  console.log("onUpdate()");
-  console.log("v: ", v);
-});
-
-export const Advert = mongoose.model<AdvertDocument>("Advert", advertSchema);
+export const Booking = mongoose.model<BookingDocument>("Booking", bookingSchema);

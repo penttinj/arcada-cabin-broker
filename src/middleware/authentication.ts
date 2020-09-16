@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { generateToken, getIdFromToken, Payload } from "../utils";
 import { HTTP401Error, HTTP403Error } from "../utils/httpErrors";
-import { JWT_SECRET } from "../config";
+import config from "../config";
 
 export const authenticate = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization as string;
@@ -13,7 +13,7 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
   }
 
   try {
-    const decodedToken = jwt.verify(token, JWT_SECRET as jwt.Secret);
+    const decodedToken = jwt.verify(token, config.JWT_SECRET);
     const refreshedToken = generateToken({
       _id: (decodedToken as Payload)._id,
       email: (decodedToken as Payload).email,

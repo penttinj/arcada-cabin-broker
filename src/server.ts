@@ -1,7 +1,7 @@
 /* eslint-disable no-process-exit */
 import http from "http";
 import express from "express";
-import { PORT } from "./config";
+import config from "./config";
 import {
   applyRoutes, logger,
 } from "./utils";
@@ -32,6 +32,6 @@ async function main() {
 
   const httpServer = http.createServer(app);
   await initMongoDB();
-  httpServer.listen(PORT, () => console.log(`Server is listening on http://localhost:${PORT}...`));
+  httpServer.listen(config.PORT, () => console.log(`Server is listening on http://localhost:${config.PORT}...`));
 }
 main();

@@ -2,35 +2,41 @@
 import { Request, Response, NextFunction } from 'express';
 import { Types } from "mongoose";
 import { getIdFromToken } from "../../utils";
-import { Advert, AdvertDocument } from "./bookingsModel";
+import { Booking, BookingDocument } from "./bookingsModel";
 import { HTTP400Error, HTTP403Error, HTTP404Error } from '../../utils/httpErrors';
 import { Cabin, CabinDocument } from '../cabins/cabinsModel';
+import { Advert } from '../adverts/advertsModel';
 
 /*
-* This is a list of checking middlewares for adverts
+* This is a list of checking middlewares for bookings
 */
 
-export const isSameCabinOwner = async (req: Request, res: Response, next: NextFunction) => {
-  const loggedInUserId = getIdFromToken(req.headers.authorization as string);
-  let result = (req.method === "POST" && req.url === "/register")
-    ? await Cabin.findById(req.body.cabinId)
-    : await Advert.findById(req.params.advertId).populate("cabin");
+export const advertExists = async (req: Request, res: Response, next: NextFunction) => {
+  const result = await Advert.findById(req.body.advertId);
   if (result) {
-    if ("cabin" in result) result = result.cabin as CabinDocument;
-    const cabinUserId = (result.owner as Types.ObjectId).toHexString();
-    if (loggedInUserId === (cabinUserId)) {
-      console.log("Same cabin owner");
-      next();
-    } else {
-      console.warn("did not equal", cabinUserId);
-      next(new HTTP403Error());
-    }
+    next();
   } else {
-    next(new HTTP404Error("Cabin not found"));
+    next(new HTTP404Error("Advert not found"));
   }
 };
 
-export const checkDates = async (req: Request, res: Response, next: NextFunction) => {
+export const isSameUser = async (req: Request, res: Response, next: NextFunction) => {
+  const currentUserId = getIdFromToken(req.headers.authorization as string);
+  const booking = await Booking.findById(req.params.bookingId);
+  if (booking) {
+    const bookingUserId = (booking.bookingUser as Types.ObjectId).toHexString();
+    if (currentUserId === (bookingUserId)) {
+      next();
+    } else {
+      console.warn("did not equal", bookingUserId);
+      next(new HTTP403Error());
+    }
+  } else {
+    next(new HTTP404Error("Booking not found"));
+  }
+};
+
+export const checkBookingDates = async (req: Request, res: Response, next: NextFunction) => {
   const now = new Date(new Date().toDateString()).getTime();
   const startD = new Date(req.body.startDate).getTime();
   const endD = new Date(req.body.endDate).getTime();
@@ -44,18 +50,18 @@ export const checkDates = async (req: Request, res: Response, next: NextFunction
   }
 };
 
-export const checkUpdatedDates = async (req: Request, res: Response, next: NextFunction) => {
+export const checkUpdatedBookingDates = async (req: Request, res: Response, next: NextFunction) => {
   // this middleware checks that an updated date isn't wrong. It couldn't easily be checked
   // with the model's own functionality
   try {
-    const adId = req.params.advertId;
-    const ad = await Advert.findById(adId);
+    const { bookingId } = req.params;
+    const booking = await Booking.findById(bookingId);
 
-    if (ad) {
+    if (booking) {
       const updatedStartD = new Date(req.body.startDate).getTime();
       const updatedEndD = new Date(req.body.endDate).getTime();
-      const adStartD = new Date(ad.startDate).getTime();
-      const adEndD = new Date(ad.endDate).getTime();
+      const adStartD = new Date(booking.startDate).getTime();
+      const adEndD = new Date(booking.endDate).getTime();
 
       if (updatedStartD && !updatedEndD) {
         if (updatedStartD > adEndD) {
@@ -68,7 +74,7 @@ export const checkUpdatedDates = async (req: Request, res: Response, next: NextF
       }
       next();
     } else {
-      next(new HTTP404Error("Advert not found"));
+      next(new HTTP404Error("Booking not found"));
     }
   } catch (e) {
     next(e);
