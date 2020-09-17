@@ -95,7 +95,6 @@ export default (app: Router) => {
     param("bookingId").escape(),
     handleValidatorResult,
     isSameUser,
-    checkDates,
     checkUpdatedDates,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
