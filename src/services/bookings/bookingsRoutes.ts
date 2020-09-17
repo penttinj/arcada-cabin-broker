@@ -6,7 +6,7 @@ import * as bookingsService from "./bookingsService";
 import { handleValidatorResult } from "../../middleware/handleValidatorResult";
 import { authenticate } from "../../middleware/authentication";
 import {
-  advertExists, isSameUser, checkBookingDates, checkUpdatedBookingDates,
+  advertExists, isSameUser, checkDates, checkUpdatedDates,
 } from "./checks";
 import { HTTP403Error } from "../../utils/httpErrors";
 import { getIdFromToken } from "../../utils";
@@ -23,7 +23,7 @@ export default (app: Router) => {
     body(["startDate", "endDate"]).isISO8601(),
     handleValidatorResult,
     advertExists,
-    checkBookingDates,
+    checkDates,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         // TODO: Check legal dates
@@ -95,8 +95,8 @@ export default (app: Router) => {
     param("bookingId").escape(),
     handleValidatorResult,
     isSameUser,
-    checkBookingDates,
-    checkUpdatedBookingDates,
+    checkDates,
+    checkUpdatedDates,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const result = await bookingsService.updateBooking(req.params.bookingId, req.body);

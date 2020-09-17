@@ -1,23 +1,23 @@
 ### Register an advert
 POST http://localhost:3000/adverts/ HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAyNzUyMzEsImV4cCI6MTYwMDI3ODgzMX0.hi9XxilMqayK91gUc4tlUR8ULmVBCj0ZItO8uqWAPzw
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAzMzQwNDUsImV4cCI6MTYwMDMzNzY0NX0.4bDEjWIk-nMX3YLeY7i64jbfs2MlY3q2UtdXtOyNJNk
 
 
 {
   "cabinId": "5f6249ce07f1e782d2e1968d",
   "pricePerDay": 24921,
-  "startDate": "2020-09-30",
+  "startDate": "2020-09-17",
   "endDate": "2020-10-16"
 }
 
 ### Get all adverts
 GET http://localhost:3000/adverts/ HTTP/1.1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAyNzUyMzEsImV4cCI6MTYwMDI3ODgzMX0.hi9XxilMqayK91gUc4tlUR8ULmVBCj0ZItO8uqWAPzw
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAzMzAzNjksImV4cCI6MTYwMDMzMzk2OX0.i95iOVLJm6W5LXa0-nrI8H7_Zzo22l3S1Na02k0yXSU
 
 ### Get specific advert with its Id
-GET http://localhost:3000/adverts/5f6219a12a746a4ed8d8d1bf HTTP/1.1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4MjVmY2M2YjE2ZjkiLCJlbWFpbCI6ImJvb2tlckBib29rZXIuY29tIiwiaWF0IjoxNjAwMjY3NTk0LCJleHAiOjE2MDAyNzExOTR9.g6HLz6JgxR63VnJag_l2bdlFr0STxlFR2_AE-YeQ9_Y
+GET http://localhost:3000/adverts/5f6249e307f1e782d2e19695 HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAzMzQwNDUsImV4cCI6MTYwMDMzNzY0NX0.4bDEjWIk-nMX3YLeY7i64jbfs2MlY3q2UtdXtOyNJNk
 
 ### Update a specific advert
 PUT http://localhost:3000/adverts/5f6219a12a746a4ed8d8d1bf HTTP/1.1

@@ -1,18 +1,18 @@
 ### Register a booking
 POST http://localhost:3000/bookings/ HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAyNzUyMzEsImV4cCI6MTYwMDI3ODgzMX0.hi9XxilMqayK91gUc4tlUR8ULmVBCj0ZItO8uqWAPzw
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAzMzQwNDUsImV4cCI6MTYwMDMzNzY0NX0.4bDEjWIk-nMX3YLeY7i64jbfs2MlY3q2UtdXtOyNJNk
 
 
 {
-  "advertId": "5f6249f407f1e782d2e19697",
-  "startDate": "2020-11-30",
-  "endDate": "2020-12-16"
+  "advertId": "5f63292af8f566b75953cdd7",
+  "startDate": "2020-10-07",
+  "endDate": "2020-10-08"
 }
 
 ### Get all bookings
 GET http://localhost:3000/bookings/ HTTP/1.1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAyNzUyMzEsImV4cCI6MTYwMDI3ODgzMX0.hi9XxilMqayK91gUc4tlUR8ULmVBCj0ZItO8uqWAPzw
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAzMzQwNDUsImV4cCI6MTYwMDMzNzY0NX0.4bDEjWIk-nMX3YLeY7i64jbfs2MlY3q2UtdXtOyNJNk
 
 ### Get specific booking with its Id
 GET http://localhost:3000/bookings/5f621ce070397c56ce85d189 HTTP/1.1
