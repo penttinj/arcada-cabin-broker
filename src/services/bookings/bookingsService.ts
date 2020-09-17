@@ -1,11 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
 import mongoose from "mongoose";
-import {
-  HTTP400Error,
-  HTTP401Error,
-  HTTP404Error,
-} from "../../utils/httpErrors";
+import { HTTP400Error, HTTP404Error } from "../../utils/httpErrors";
 import { UserDocument } from "../users/usersModel";
 import { AdvertDocument } from "../adverts/advertsModel";
 import { Booking, BookingDocument } from "./bookingsModel";
@@ -41,11 +37,6 @@ export const extractBookingInfo = (booking: BookingDocument) => {
 };
 
 export const registerBooking = async (bookingDetails: BookingDetails) => {
-
-  /**
-   * Here we check that the booking is within the ad's rentage time and isn't occupied
-   */
-
   const booking = await Booking.create({
     _id: mongoose.Types.ObjectId(),
     ...bookingDetails,

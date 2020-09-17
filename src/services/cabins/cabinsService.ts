@@ -1,12 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
 import mongoose from "mongoose";
-import {
-  HTTP400Error,
-  HTTP401Error,
-  HTTP404Error,
-} from "../../utils/httpErrors";
-import { UserDocument } from "../users/usersModel";
+import { HTTP400Error, HTTP404Error } from "../../utils/httpErrors";
 import { Cabin, CabinDocument } from "./cabinsModel";
 
 interface CabinDetails {

@@ -6,9 +6,6 @@ import * as usersService from "./usersService";
 import { handleValidatorResult } from "../../middleware/handleValidatorResult";
 import { authenticate } from "../../middleware/authentication";
 import { isSameUser } from "./checks";
-import {
-  HTTP400Error, HTTP401Error, HTTP404Error, HTTP403Error,
-} from "../../utils/httpErrors";
 
 export default (app: Router) => {
   const route = Router();

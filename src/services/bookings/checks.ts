@@ -4,8 +4,8 @@ import mongoose, { Types, Document } from "mongoose";
 import { getIdFromToken } from "../../utils";
 import { Booking, BookingDocument } from "./bookingsModel";
 import { HTTP400Error, HTTP403Error, HTTP404Error } from '../../utils/httpErrors';
-import { Cabin, CabinDocument } from '../cabins/cabinsModel';
 import { Advert } from '../adverts/advertsModel';
+import { getDatesAsUnixFromModel, convertDocumentDatesToUnix, checkDocDates } from '../../utils/checkUtils';
 
 /*
 * This is a list of checking middlewares for bookings
@@ -36,66 +36,7 @@ export const isSameUser = async (req: Request, res: Response, next: NextFunction
   }
 };
 
-type DocumentWithDates = mongoose.Document & {
-  startDate: Date,
-  endDate: Date,
-}
 
-/**
- * @param model A model that contains startDate and endDate
- * @param id The document Id
- * @returns Array, in the shape of [startDate, endDate]
- */
-const getDatesAsUnixFromModel = async (model: mongoose.Model<DocumentWithDates>, id: string | Types.ObjectId) => {
-  const result = await model.findById(id);
-  if (result) {
-    return [
-      result.startDate.getTime(),
-      result.endDate.getTime(),
-    ];
-  }
-  throw new HTTP404Error();
-};
-
-const convertDocumentDatesToUnix = (doc: DocumentWithDates) => {
-  return [
-    doc.startDate.getTime(),
-    doc.endDate.getTime(),
-  ];
-};
-
-type Options = "within" | "collision";
-
-export const checkDocDates = (
-  incomingStartD: number,
-  incomingEndD: number,
-  modelStartD: number,
-  modelEndD: number,
-  within: Options,
-) => {
-  switch (within) {
-    case "within":
-      if ((incomingStartD >= modelStartD && incomingStartD <= modelEndD)
-        && (incomingEndD <= modelEndD && incomingEndD >= modelStartD)) {
-        return true;
-      }
-      return false;
-      break;
-    case "collision":
-      if (
-        (incomingStartD >= modelStartD && incomingStartD <= modelEndD)
-        || (incomingEndD <= modelEndD && incomingEndD >= modelStartD)
-        || (incomingStartD <= modelStartD && incomingEndD >= modelStartD)
-        || (incomingEndD >= modelEndD && incomingStartD <= modelEndD)
-      ) {
-        return true;
-      }
-      return false;
-      break;
-    default:
-      throw new Error("Invalid parameter for 'within'")
-  }
-};
 
 export const checkDates = async (req: Request, res: Response, next: NextFunction) => {
   const now = new Date(new Date().toDateString()).getTime();
@@ -106,10 +47,9 @@ export const checkDates = async (req: Request, res: Response, next: NextFunction
 
   try {
     const [advertStartD, advertEndD] = await getDatesAsUnixFromModel(Advert, advertId);
-
-
+    
     const bookingsForSameAdvert = await Booking.find({ advert: advertId });
-
+    // Check for conflicts in other bookings that book the same advert
     bookingsForSameAdvert.forEach((booking) => {
       const [bookingStartD, bookingEndD] = convertDocumentDatesToUnix(booking);
       const conflictingDates = checkDocDates(startD, endD, bookingStartD, bookingEndD, "collision");
@@ -152,7 +92,6 @@ export const checkUpdatedDates = async (req: Request, res: Response, next: NextF
       const bookingEndD = new Date(booking.endDate).getTime();
       const [advertStartD, advertEndD] = await getDatesAsUnixFromModel(Advert, booking.advert as Types.ObjectId);
       const bookingsForSameAdvert = await Booking.find({ advert: booking.advert });
-
       let startDate = bookingStartD, endDate = bookingEndD; // placeholder values
 
       // Assign startDate and endDate depending on which values came with the request
@@ -171,29 +110,29 @@ export const checkUpdatedDates = async (req: Request, res: Response, next: NextF
         throw new HTTP400Error("Updated date(s) conflict with eachother");
       }
 
-      const datesFallWithinAdvert = checkDocDates(bodyStartD, bodyEndD, advertStartD, advertEndD, "within");
+      const datesFallWithinAdvert = checkDocDates(
+        bodyStartD, bodyEndD, advertStartD, advertEndD, "within"
+        );
       if (!datesFallWithinAdvert) {
         throw new HTTP400Error("The updated dates don't fall within the model's dates");
       }
-      
-      console.log("bookingforsameadvert:", bookingsForSameAdvert);
+
+      // Check other bookings for conflicts with the new dates
       bookingsForSameAdvert.forEach((booking) => {
-        const [thisBookingStartD, thisBookingEndD] = convertDocumentDatesToUnix(booking);
-        const conflictingDates = checkDocDates(startDate, endDate, thisBookingStartD, thisBookingEndD, "collision");
-        if (conflictingDates) {
-          console.log("conflicting booking's Id:", booking._id.toHexString());
-          throw new HTTP400Error("An existing booking conflicts with wanted dates");
+        // Skip checking the booking we are modifying
+        if (booking._id.toHexString() !== bookingId) {
+          const [thisBookingStartD, thisBookingEndD] = convertDocumentDatesToUnix(booking);
+          const conflictingDates = checkDocDates(
+            startDate, endDate, thisBookingStartD, thisBookingEndD, "collision"
+            );
+          if (conflictingDates) {
+            console.log("conflicting booking's Id:", booking._id.toHexString());
+            throw new HTTP400Error("An existing booking conflicts with wanted dates");
+          }
         }
       });
-      
-      
-      
-      
-      
-      
-      
-      
-      
+
+      // The dates are OK
       next();
     } else {
       throw new HTTP404Error("Booking not found");

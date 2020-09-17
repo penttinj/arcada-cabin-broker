@@ -1,36 +1,36 @@
 ### Register an advert
 POST http://localhost:3000/adverts/ HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4MjVmY2M2YjE2ZjkiLCJlbWFpbCI6ImJvb2tlckBib29rZXIuY29tIiwiaWF0IjoxNjAwMzM3MTk4LCJleHAiOjE2MDAzNDA3OTh9.kRGlpVSZc81jQxNJig_zGO-c4D3YdzCNCQUmRbf4rO0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4MjVmY2M2YjE2ZjkiLCJlbWFpbCI6ImJvb2tlckBib29rZXIuY29tIiwiaWF0IjoxNjAwMzYxNjAxLCJleHAiOjE2MDAzNjUyMDF9.x-dKyWcbfjoBY8GPfv1xWgtVgB-uXT_EplJ_1X0vRiw
 
 
 {
-  "cabinId": "5f633548fabe85261c64158e",
+  "cabinId": "5f6397ca96fb0c214cb250f9",
   "pricePerDay": 24921,
-  "startDate": "2020-09-17",
-  "endDate": "2021-12-16"
+  "startDate": "2023-09-12",
+  "endDate": "2023-12-16"
 }
 
 ### Get all adverts
 GET http://localhost:3000/adverts/ HTTP/1.1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAzMzAzNjksImV4cCI6MTYwMDMzMzk2OX0.i95iOVLJm6W5LXa0-nrI8H7_Zzo22l3S1Na02k0yXSU
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4MjVmY2M2YjE2ZjkiLCJlbWFpbCI6ImJvb2tlckBib29rZXIuY29tIiwiaWF0IjoxNjAwMzYxNjAxLCJleHAiOjE2MDAzNjUyMDF9.x-dKyWcbfjoBY8GPfv1xWgtVgB-uXT_EplJ_1X0vRiw
 
 ### Get specific advert with its Id
-GET http://localhost:3000/adverts/5f6249e307f1e782d2e19695 HTTP/1.1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAzMzQwNDUsImV4cCI6MTYwMDMzNzY0NX0.4bDEjWIk-nMX3YLeY7i64jbfs2MlY3q2UtdXtOyNJNk
+GET http://localhost:3000/adverts/5f6397d896fb0c214cb250fb HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4MjVmY2M2YjE2ZjkiLCJlbWFpbCI6ImJvb2tlckBib29rZXIuY29tIiwiaWF0IjoxNjAwMzYxNjAxLCJleHAiOjE2MDAzNjUyMDF9.x-dKyWcbfjoBY8GPfv1xWgtVgB-uXT_EplJ_1X0vRiw
 
 ### Update a specific advert
-PUT http://localhost:3000/adverts/5f6219a12a746a4ed8d8d1bf HTTP/1.1
+PUT http://localhost:3000/adverts/5f6397d896fb0c214cb250fb HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAyNjgwMTksImV4cCI6MTYwMDI3MTYxOX0.0tcMqKUHLMkKnbAi0fEze9e2ukWDnoQDugtYbbkzAD0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4MjVmY2M2YjE2ZjkiLCJlbWFpbCI6ImJvb2tlckBib29rZXIuY29tIiwiaWF0IjoxNjAwMzYxNjAxLCJleHAiOjE2MDAzNjUyMDF9.x-dKyWcbfjoBY8GPfv1xWgtVgB-uXT_EplJ_1X0vRiw
 
 
 {
   "pricePerDay": 69,
-  "endDate": "2020-10-28",
-  "startDate": "2020-10-22"
+  "startDate": "2023-12-17",
+  "endDate": "2024-09-14"
 }
 
 ### Delete specific advert 
-DELETE http://localhost:3000/adverts/5f6219a12a746a4ed8d8d1bf HTTP/1.1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAyNjgwNzMsImV4cCI6MTYwMDI3MTY3M30.6q0eaArkssA7V1LByso2VqtWVgbiIP6yJcb4wWIco0w
+DELETE http://localhost:3000/adverts/5f6397d896fb0c214cb250fb HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4MjVmY2M2YjE2ZjkiLCJlbWFpbCI6ImJvb2tlckBib29rZXIuY29tIiwiaWF0IjoxNjAwMzYxNjAxLCJleHAiOjE2MDAzNjUyMDF9.x-dKyWcbfjoBY8GPfv1xWgtVgB-uXT_EplJ_1X0vRiw

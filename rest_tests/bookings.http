@@ -1,35 +1,34 @@
 ### Register a booking
 POST http://localhost:3000/bookings/ HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4MjVmY2M2YjE2ZjkiLCJlbWFpbCI6ImJvb2tlckBib29rZXIuY29tIiwiaWF0IjoxNjAwMzM3MTk4LCJleHAiOjE2MDAzNDA3OTh9.kRGlpVSZc81jQxNJig_zGO-c4D3YdzCNCQUmRbf4rO0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4MjVmY2M2YjE2ZjkiLCJlbWFpbCI6ImJvb2tlckBib29rZXIuY29tIiwiaWF0IjoxNjAwMzU4NTc5LCJleHAiOjE2MDAzNjIxNzl9.d7IJY_U1Zmfjw75Ae9QYzIcilir6rHpuV1TfhLdPwHA
 
 
 {
-  "advertId": "5f633630fabe85261c641590",
-  "startDate": "2022-12-02",
-  "endDate": "2022-12-04"
+  "advertId": "5f636fba9b86674618714177",
+  "startDate": "2020-10-20",
+  "endDate": "2020-10-27"
 }
 
 ### Get all bookings
 GET http://localhost:3000/bookings/ HTTP/1.1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4MjVmY2M2YjE2ZjkiLCJlbWFpbCI6ImJvb2tlckBib29rZXIuY29tIiwiaWF0IjoxNjAwMzM3MTk4LCJleHAiOjE2MDAzNDA3OTh9.kRGlpVSZc81jQxNJig_zGO-c4D3YdzCNCQUmRbf4rO0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4MjVmY2M2YjE2ZjkiLCJlbWFpbCI6ImJvb2tlckBib29rZXIuY29tIiwiaWF0IjoxNjAwMzYxNjAxLCJleHAiOjE2MDAzNjUyMDF9.x-dKyWcbfjoBY8GPfv1xWgtVgB-uXT_EplJ_1X0vRiw
 
 ### Get specific booking with its Id
-GET http://localhost:3000/bookings/5f621ce070397c56ce85d189 HTTP/1.1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAyNzUyMzEsImV4cCI6MTYwMDI3ODgzMX0.hi9XxilMqayK91gUc4tlUR8ULmVBCj0ZItO8uqWAPzw
+GET http://localhost:3000/bookings/5f636fd19b86674618714179 HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4MjVmY2M2YjE2ZjkiLCJlbWFpbCI6ImJvb2tlckBib29rZXIuY29tIiwiaWF0IjoxNjAwMzU4NTc5LCJleHAiOjE2MDAzNjIxNzl9.d7IJY_U1Zmfjw75Ae9QYzIcilir6rHpuV1TfhLdPwHA
 
 ### Update a specific booking
-PUT http://localhost:3000/bookings/5f624a6a55b77d855c34b4d9 HTTP/1.1
+PUT http://localhost:3000/bookings/5f636fd19b86674618714179 HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAyNzUyMzEsImV4cCI6MTYwMDI3ODgzMX0.hi9XxilMqayK91gUc4tlUR8ULmVBCj0ZItO8uqWAPzw
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4MjVmY2M2YjE2ZjkiLCJlbWFpbCI6ImJvb2tlckBib29rZXIuY29tIiwiaWF0IjoxNjAwMzYxNjAxLCJleHAiOjE2MDAzNjUyMDF9.x-dKyWcbfjoBY8GPfv1xWgtVgB-uXT_EplJ_1X0vRiw
 
 
 {
-  "pricePerDay": 69,
-  "endDate": "2020-10-28",
-  "startDate": "2020-10-22"
+  "startDate": "2020-10-23",
+  "endDate": "2020-12-25"
 }
 
 ### Delete specific booking 
-DELETE http://localhost:3000/bookings/5f624a6a55b77d855c34b4d9 HTTP/1.1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAyNzUyMzEsImV4cCI6MTYwMDI3ODgzMX0.hi9XxilMqayK91gUc4tlUR8ULmVBCj0ZItO8uqWAPzw
+DELETE http://localhost:3000/bookings/5f636fd19b86674618714179 HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4MjVmY2M2YjE2ZjkiLCJlbWFpbCI6ImJvb2tlckBib29rZXIuY29tIiwiaWF0IjoxNjAwMzYxNjAxLCJleHAiOjE2MDAzNjUyMDF9.x-dKyWcbfjoBY8GPfv1xWgtVgB-uXT_EplJ_1X0vRiw

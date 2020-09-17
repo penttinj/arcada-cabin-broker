@@ -8,7 +8,6 @@ import { authenticate } from "../../middleware/authentication";
 import {
   advertExists, isSameUser, checkDates, checkUpdatedDates,
 } from "./checks";
-import { HTTP403Error } from "../../utils/httpErrors";
 import { getIdFromToken } from "../../utils";
 
 export default (app: Router) => {
@@ -26,7 +25,6 @@ export default (app: Router) => {
     checkDates,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        // TODO: Check legal dates
         const result = await bookingsService.registerBooking({
           advert: req.body.advertId,
           bookingUser: getIdFromToken(req.headers.authorization as string),

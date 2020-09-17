@@ -6,8 +6,6 @@ import * as advertsService from "./advertsService";
 import { handleValidatorResult } from "../../middleware/handleValidatorResult";
 import { authenticate } from "../../middleware/authentication";
 import { isSameCabinOwner, checkDates, checkUpdatedDates } from "./checks";
-import { getIdFromToken } from "../../utils";
-import { HTTP403Error } from "../../utils/httpErrors";
 
 export default (app: Router) => {
   const route = Router();
@@ -23,11 +21,8 @@ export default (app: Router) => {
     handleValidatorResult,
     isSameCabinOwner,
     checkDates,
-    // Could still also check an advert doesn't collide with other ads for same cabin
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        // I guess we could pass the start and end dates to the service
-        // and from there it checks for collisions. Since we're hving to access the Model
         const result = await advertsService.registerAdvert({
           cabin: req.body.cabinId,
           pricePerDay: req.body.pricePerDay,

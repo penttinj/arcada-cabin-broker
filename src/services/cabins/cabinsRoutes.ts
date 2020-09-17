@@ -7,7 +7,6 @@ import { handleValidatorResult } from "../../middleware/handleValidatorResult";
 import { authenticate } from "../../middleware/authentication";
 import { isSameUser } from "./checks";
 import { getIdFromToken } from "../../utils";
-import { HTTP403Error } from "../../utils/httpErrors";
 
 export default (app: Router) => {
   const route = Router();

@@ -11,15 +11,15 @@ import errorHandlers from "./middleware/errorHandlers";
 import { initMongoDB } from "./config/mongodb";
 
 process.on("uncaughtException", (err: Error) => {
-  console.log("Uncaught Exception");
-  console.log(err);
+  console.error("Uncaught Exception");
+  console.error(err);
   logger.error(err.stack);
   process.exit(1);
 });
 
 process.on("unhandledRejection", (err: Error) => {
-  console.log("Uncaught Rejection");
-  console.log(err);
+  console.error("Uncaught Rejection");
+  console.error(err);
   logger.error(err.stack);
   process.exit(1);
 });

@@ -1,12 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
 import mongoose from "mongoose";
-import {
-  HTTP400Error,
-  HTTP401Error,
-  HTTP404Error,
-} from "../../utils/httpErrors";
-import { UserDocument } from "../users/usersModel";
+import { HTTP400Error, HTTP404Error } from "../../utils/httpErrors";
 import { Advert, AdvertDocument } from "./advertsModel";
 
 interface AdvertDetails {
@@ -16,15 +11,17 @@ interface AdvertDetails {
   endDate: Date,
 }
 interface AdvertInfo {
-    _id: any;
-    pricePerDay: number;
-    address: string;
-    startDate: Date;
-    endDate: Date;
+  _id: any;
+  pricePerDay: number;
+  address: string;
+  startDate: Date;
+  endDate: Date;
 }
 
 export const extractAdvertInfo = (advert: AdvertDocument) => {
+  console.log("extract", advert);
   if ("owner" in advert.cabin && "firstName" in advert.cabin.owner) {
+    console.log("inside if");
     const { firstName, lastName } = advert.cabin.owner;
     return {
       _id: advert._id,
@@ -91,9 +88,16 @@ export const getAdvert = async (advertId: string) => {
 };
 
 export const updateAdvert = async (idParam: string, body: any) => {
-  const result = await Advert.updateOne({ _id: idParam }, { $set: body }, { runValidators: true });
+  const result = await Advert.updateOne({ _id: idParam }, { $set: body });
   if (result) {
-    const updatedAdvert = await Advert.findById(idParam).populate("cabin");
+    const updatedAdvert = await Advert.findById(idParam)
+      .populate({
+        path: "cabin",
+        populate: {
+          path: "owner",
+          select: "email firstName lastName -_id",
+        },
+      });
     return extractAdvertInfo(updatedAdvert as AdvertDocument);
   }
   throw new HTTP400Error();

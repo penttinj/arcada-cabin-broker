@@ -2,10 +2,8 @@
 import {
   Router, Request, Response, NextFunction,
 } from "express";
-import mongoose from "mongoose";
 import winston from "winston";
 import jwt from "jsonwebtoken";
-import { User } from "../services/users/usersModel";
 import config from "../config";
 
 type TWrapper = ((router: Router) => void);
@@ -48,7 +46,7 @@ export const generateToken = (payload: Payload) => {
     const token = jwt.sign(payload, config.JWT_SECRET,
       {
         algorithm: "HS256",
-        expiresIn: "1h", // CHANGE THIS!!!!!!!!!!!! to 5m
+        expiresIn: "5m", // Seems like a decent time for a session since tokens get refreshed on each req
       });
 
     return token;
