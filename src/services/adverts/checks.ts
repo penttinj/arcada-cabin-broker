@@ -75,7 +75,8 @@ export const checkUpdatedDates = async (req: Request, res: Response, next: NextF
       const adStartD = new Date(ad.startDate).getTime();
       const adEndD = new Date(ad.endDate).getTime();
       const adsForSameCabin = await Advert.find({ cabin: ad.cabin });
-      let startDate = adStartD, endDate = adEndD; // placeholder values
+      let startDate = adStartD,
+        endDate = adEndD; // placeholder values
 
       // Assign startDate and endDate depending on which values came with the request
       if (bodyStartD && bodyEndD) {
@@ -93,20 +94,20 @@ export const checkUpdatedDates = async (req: Request, res: Response, next: NextF
         throw new HTTP400Error("Updated date(s) conflict with eachother");
       }
 
-      adsForSameCabin.forEach((ad) => {
+      adsForSameCabin.forEach((_ad) => {
         // Skip checking the advert we are modifying
-        if (ad._id.toHexString() !== adId) {
-          const [thisAdStartD, thisAdEndD] = convertDocumentDatesToUnix(ad);
+        if (_ad._id.toHexString() !== adId) {
+          const [thisAdStartD, thisAdEndD] = convertDocumentDatesToUnix(_ad);
           const conflictingDates = checkDocDates(
-            startDate, endDate, thisAdStartD, thisAdEndD, "collision"
+            startDate, endDate, thisAdStartD, thisAdEndD, "collision",
           );
           if (conflictingDates) {
-            console.log("conflicting advert's Id:", ad._id.toHexString());
+            console.log("conflicting advert's Id:", _ad._id.toHexString());
             throw new HTTP400Error("An existing advert conflicts with wanted dates");
           }
         }
       });
-      
+
       // The updated advert's dates are OK
       next();
     } else {

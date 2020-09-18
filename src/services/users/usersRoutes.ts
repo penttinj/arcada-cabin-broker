@@ -59,6 +59,7 @@ export default (app: Router) => {
       }
     });
 
+  // Only the logged in user itself is allowed to see its own information.
   route.get("/:id",
     authenticate,
     isSameUser,

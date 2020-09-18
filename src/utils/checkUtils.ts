@@ -11,7 +11,9 @@ type DocumentWithDates = mongoose.Document & {
  * @param id The document Id
  * @returns Array, in the shape of [startDate, endDate]
  */
-export const getDatesAsUnixFromModel = async (model: mongoose.Model<DocumentWithDates>, id: string | Types.ObjectId) => {
+export const getDatesAsUnixFromModel = async (
+  model: mongoose.Model<DocumentWithDates>, id: string | Types.ObjectId,
+) => {
   const result = await model.findById(id);
   if (result) {
     return [
@@ -45,7 +47,6 @@ export const checkDocDates = (
         return true;
       }
       return false;
-      break;
     case "collision":
       if (
         (incomingStartD >= modelStartD && incomingStartD <= modelEndD)
@@ -56,8 +57,7 @@ export const checkDocDates = (
         return true;
       }
       return false;
-      break;
     default:
-      throw new Error("Invalid parameter for 'within'")
+      throw new Error("Invalid parameter for 'within'");
   }
 };

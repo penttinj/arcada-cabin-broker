@@ -1,0 +1,42 @@
+###
+### You can perform these requests with vscode's "Rest Client" extension
+###
+
+### REGISTER
+POST http://localhost:3000/cabins/ HTTP/1.1
+content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4MjVmY2M2YjE2ZjkiLCJlbWFpbCI6ImJvb2tlckBib29rZXIuY29tIiwiaWF0IjoxNjAwMzYxNjAxLCJleHAiOjE2MDAzNjUyMDF9.x-dKyWcbfjoBY8GPfv1xWgtVgB-uXT_EplJ_1X0vRiw
+
+
+
+{
+  "address": "Testing advert conflicts",
+  "squarageCabin": 628,
+  "squarageProperty": 286,
+  "sauna": false,
+  "beachfront": false
+}
+
+### Get all cabins
+GET http://localhost:3000/cabins/ HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4MjVmY2M2YjE2ZjkiLCJlbWFpbCI6ImJvb2tlckBib29rZXIuY29tIiwiaWF0IjoxNjAwMzYxNjAxLCJleHAiOjE2MDAzNjUyMDF9.x-dKyWcbfjoBY8GPfv1xWgtVgB-uXT_EplJ_1X0vRiw
+### Get specific cabin with its Id
+GET http://localhost:3000/cabins/5f5f42efcb4ee56aae44df0f HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAyNjQzMzIsImV4cCI6MTYwMDI2NzkzMn0.lmtYaKxxp-E__XrehmW-5yj6u_JHQF4rmcPPISMZ0nE
+
+### Update a specific cabin
+PUT http://localhost:3000/cabins/5f639a797ec3c0576498b455 HTTP/1.1
+content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4MjVmY2M2YjE2ZjkiLCJlbWFpbCI6ImJvb2tlckBib29rZXIuY29tIiwiaWF0IjoxNjAwMzYxNjAxLCJleHAiOjE2MDAzNjUyMDF9.x-dKyWcbfjoBY8GPfv1xWgtVgB-uXT_EplJ_1X0vRiw
+
+
+{
+  "address": "waystreet 1234",
+  "squarageProperty": 321,
+  "sauna": true,
+  "beachfront": false
+}
+
+### Delete specific cabin 
+DELETE http://localhost:3000/cabins/5f5dec40be89542b312cdd0f HTTP/1.1
+Authorization: Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAyNjQzMzIsImV4cCI6MTYwMDI2NzkzMn0.lmtYaKxxp-E__XrehmW-5yj6u_JHQF4rmcPPISMZ0nE
