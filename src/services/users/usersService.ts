@@ -25,7 +25,6 @@ const validatePasswordLength = (password: string, min: number) => {
 const isUniqueEmail = async (email: string) => {
   const result = await User.findOne({ email }).exec();
   if (result) {
-    console.log(result);
     throw new HTTP400Error(`Email already exists!`);
   }
 };
