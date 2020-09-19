@@ -10,18 +10,21 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjY0ZjA3NTYwODNi
 
 {
   "cabinId": "5f6397ca96fb0c214cb250f9",
-  "pricePerDay": 24921,
-  "startDate": "2030-09-12",
-  "endDate": "2040-12-16"
+  "pricePerDay": 250,
+  "startDate": "2020-09-20",
+  "endDate": "2020-11-16"
 }
+
 
 ### Get all adverts
 GET http://localhost:3000/adverts/ HTTP/1.1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4MjVmY2M2YjE2ZjkiLCJlbWFpbCI6ImJvb2tlckBib29rZXIuY29tIiwiaWF0IjoxNjAwMzYxNjAxLCJleHAiOjE2MDAzNjUyMDF9.x-dKyWcbfjoBY8GPfv1xWgtVgB-uXT_EplJ_1X0vRiw
 
+
 ### Get specific advert with its Id
 GET http://localhost:3000/adverts/5f6397d896fb0c214cb250fb HTTP/1.1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4MjVmY2M2YjE2ZjkiLCJlbWFpbCI6ImJvb2tlckBib29rZXIuY29tIiwiaWF0IjoxNjAwMzYxNjAxLCJleHAiOjE2MDAzNjUyMDF9.x-dKyWcbfjoBY8GPfv1xWgtVgB-uXT_EplJ_1X0vRiw
+
 
 ### Update a specific advert
 PUT http://localhost:3000/adverts/5f6397d896fb0c214cb250fb HTTP/1.1
@@ -34,6 +37,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4
   "startDate": "2023-12-17",
   "endDate": "2024-09-14"
 }
+
 
 ### Delete specific advert 
 DELETE http://localhost:3000/adverts/5f6397d896fb0c214cb250fb HTTP/1.1

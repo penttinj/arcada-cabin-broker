@@ -10,19 +10,23 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4
 
 
 {
-  "address": "Testing advert conflicts",
-  "squarageCabin": 628,
-  "squarageProperty": 286,
-  "sauna": false,
+  "address": "Easy St. 345",
+  "squarageCabin": 80,
+  "squarageProperty": 1300,
+  "sauna": true,
   "beachfront": false
 }
+
 
 ### Get all cabins
 GET http://localhost:3000/cabins/ HTTP/1.1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4MjVmY2M2YjE2ZjkiLCJlbWFpbCI6ImJvb2tlckBib29rZXIuY29tIiwiaWF0IjoxNjAwNDQzOTI4LCJleHAiOjE2MDA0NDQyMjh9.FvP_iBM2AFCIrNd_3YyjSmRSD-scgyKGY9AG6Nrtb44
+
+
 ### Get specific cabin with its Id
 GET http://localhost:3000/cabins/5f5f42efcb4ee56aae44df0f HTTP/1.1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVmNDI5N2NiNGVlNTZhYWU0NGRmMGQiLCJlbWFpbCI6ImpvaGFuM0BnbWFpbC5jb20iLCJpYXQiOjE2MDAyNjQzMzIsImV4cCI6MTYwMDI2NzkzMn0.lmtYaKxxp-E__XrehmW-5yj6u_JHQF4rmcPPISMZ0nE
+
 
 ### Update a specific cabin
 PUT http://localhost:3000/cabins/5f639a797ec3c0576498b455 HTTP/1.1
@@ -31,11 +35,11 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjYyMjUwNWExNTQ4
 
 
 {
-  "address": "waystreet 1234",
+  "address": "Vägensväg 8",
   "squarageProperty": 321,
-  "sauna": true,
   "beachfront": false
 }
+
 
 ### Delete specific cabin 
 DELETE http://localhost:3000/cabins/5f5dec40be89542b312cdd0f HTTP/1.1

@@ -8,11 +8,12 @@ content-type: application/json
 
 
 {
-  "email": "bookadr4e3wer@booker.com",
-  "firstName": "Boooo",
-  "lastName": "Ker",
+  "email": "johan@johan.com",
+  "firstName": "Johan",
+  "lastName": "Penttinen",
   "password": "asdasdasd"
 }
+
 
 ### LOGIN
 POST http://localhost:3000/users/login HTTP/1.1
@@ -20,9 +21,10 @@ content-type: application/json
 
 
 {
-  "email": "bookadr4e3wer@booker.com",
+  "email": "johan@johan.com",
   "password": "asdasdasd"
 }
+
 
 ### GET A USER
 GET http://localhost:3000/users/5f5cdbe51c49d8340a8725dc HTTP/1.1
@@ -38,8 +40,8 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVkZmM4YjRlMWVm
   "lastName": "sista namn"
 }
 
-### DELETE A USER
 
+### DELETE A USER
 DELETE http://localhost:3000/users/5f5dfc8b4e1ef9394e53ef1b HTTP/1.1
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjVkZmM4YjRlMWVmOTM5NGU1M2VmMWIiLCJlbWFpbCI6ImpvaGFuQGdtYWlsLmNvbSIsImlhdCI6MTYwMDAwNjM3OSwiZXhwIjoxNjAwMDA2Njc5fQ.TJGYFnqSGRBEB3ZBJTD3V19lL6i8GFRqInNfjMSsh5o

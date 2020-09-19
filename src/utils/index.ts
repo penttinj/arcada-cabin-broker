@@ -6,7 +6,7 @@ import winston from "winston";
 import jwt from "jsonwebtoken";
 import config from "../config";
 
-type TWrapper = ((router: Router) => void);
+type TWrapper = ((app: Router) => void);
 
 export const applyRoutes = (
   routes: TWrapper[],
